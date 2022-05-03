@@ -1,0 +1,25 @@
+const { Job } = require('./Job');
+const { Language } = require('./Language');
+const { Tool } = require('./Tool');
+const { User } = require('./User');
+const { db } = require('../db');
+
+// creates a mode called Apply with JobId, UserId
+Job.belongsToMany(User, { through: 'Apply' });
+User.belongsToMany(Job, { through: 'Apply' });
+
+// creates a mode called JobLang with JobId, LanguageId
+Job.belongsToMany(Language, { through: 'JobLang' });
+Language.belongsToMany(Job, { through: 'JobLang' });
+
+// creates a mode called JobTool with JobId, ToolId
+Job.belongsToMany(Tool, { through: 'JobTool' });
+Tool.belongsToMany(Job, { through: 'JobTool' });
+
+module.exports = {
+    Job,
+    Language,
+    Tool,
+    User,
+    db
+};
