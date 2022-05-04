@@ -1,0 +1,22 @@
+{
+	"tools": [
+		{ "tool": "Java" },
+		{ "tool": "JavaScript" },
+		{ "tool": "Python" },
+		{ "tool": "C++" },
+		{ "tool": "Golang" },
+		{ "tool": "C#" },
+		{ "tool": "PHP" },
+		{ "tool": "Ruby" },
+		{ "tool": "Objective-C" },
+		{ "tool": "SQL" },
+		{ "tool": "Swift" },
+		{ "tool": "TypeScript" },
+		{ "tool": "HTML" },
+		{ "tool": "CSS" },
+		{ "tool": "Dart" },
+		{ "tool": "React" },
+		{ "tool": "Angular" },
+		{ "tool": "Kotlin" }
+	]
+}

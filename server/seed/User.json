@@ -1,0 +1,14 @@
+{
+	"users": [
+		{"firstName": "Natalie","lastName":"Morales", "email": "nmorales@gmail.com", "password": 123, "image": "", "resume": "", "bio": "", "experience": 0, "isEmployer": false},
+		{"firstName": "Bruce", "lastName":"Willis", "email": "brucewillis@aol.com", "password": 123, "image": "", "resume": "", "bio": "", "experience": 0, "isEmployer": false},
+		{"firstName": "Hiroyuki","lastName":"Sanada",  "email": "hiroyuki5@yahoo.com", "password": 123, "image": "", "resume": "", "bio": "", "experience": 0, "isEmployer": false},
+		{"firstName": "Michelle","lastName":"Rodriguez",  "email": "mrodriguez@gmail.com", "password": 123, "image": "", "resume": "", "bio": "", "experience": 0, "isEmployer": false},
+		{"firstName": "Morgan","lastName":"Freeman",  "email": "morganfreeman@aol.com", "password": 123, "image": "", "resume": "", "bio": "", "experience": 0, "isEmployer": false},
+		{"firstName": "Ben","lastName":"Affleck",  "email": "benaffleck@gmail.com", "password": 123, "image": "", "resume": "", "bio": "", "experience": 0, "isEmployer": false},
+		{"firstName": "Johnny","lastName":"Knoxville",  "email": "johnknoxville@hotmail.com", "password": 123, "image": "", "resume": "", "bio": "", "experience": 0, "isEmployer": false},
+		{"firstName": "Salma","lastName":"Hayek",  "email": "salmahayek@hotmail.com", "password": 123, "image": "", "resume": "", "bio": "", "experience": 0, "isEmployer": false},
+		{"firstName": "Idris","lastName":"Elba",  "email": "idriselba15@gmail.com", "password": 123, "image": "", "resume": "", "bio": "", "experience": 0, "isEmployer": false},
+		{"firstName": "Tyler","lastName":"Perry",  "email": "tylerperry@gmail.com", "password": 123, "image": "", "resume": "", "bio": "", "experience": 0, "isEmployer": false}
+	]
+}

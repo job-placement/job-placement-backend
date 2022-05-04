@@ -1,0 +1,22 @@
+{
+	"skills": [
+		{ "skill": "Java" },
+		{ "skill": "JavaScript" },
+		{ "skill": "Python" },
+		{ "skill": "C++" },
+		{ "skill": "Golang" },
+		{ "skill": "C#" },
+		{ "skill": "PHP" },
+		{ "skill": "Ruby" },
+		{ "skill": "Objective-C" },
+		{ "skill": "SQL" },
+		{ "skill": "Swift" },
+		{ "skill": "TypeScript" },
+		{ "skill": "HTML" },
+		{ "skill": "CSS" },
+		{ "skill": "Dart" },
+		{ "skill": "React" },
+		{ "skill": "Angular" },
+		{ "skill": "Kotlin" }
+	]
+}
