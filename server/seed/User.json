@@ -11,4 +11,4 @@
 		{"firstName": "Idris","lastName":"Elba",  "email": "idriselba15@gmail.com", "password": 123, "image": "", "resume": "", "bio": "", "experience": 0, "isEmployer": false},
 		{"firstName": "Tyler","lastName":"Perry",  "email": "tylerperry@gmail.com", "password": 123, "image": "", "resume": "", "bio": "", "experience": 0, "isEmployer": false}
 	]
-}    
+}

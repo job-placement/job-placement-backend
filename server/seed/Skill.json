@@ -1,20 +1,22 @@
-[
-    { "language": "Java" },
-    { "language": "JavaScript" },
-    { "language": "Python" },
-    { "language": "C++" },
-    { "language": "Golang" },
-    { "language": "C#" },
-    { "language": "PHP" },
-    { "language": "Ruby" },
-    { "language": "Objective-C" },
-    { "language": "SQL" },
-    { "language": "Swift" },
-    { "language": "TypeScript" },
-    { "language": "HTML" },
-    { "language": "CSS" },
-    { "language": "Dart" },
-    { "language": "React" },
-    { "language": "Angular" },
-    { "language": "Kotlin" }
-]
+{
+	"skills": [
+		{ "skill": "Java" },
+		{ "skill": "JavaScript" },
+		{ "skill": "Python" },
+		{ "skill": "C++" },
+		{ "skill": "Golang" },
+		{ "skill": "C#" },
+		{ "skill": "PHP" },
+		{ "skill": "Ruby" },
+		{ "skill": "Objective-C" },
+		{ "skill": "SQL" },
+		{ "skill": "Swift" },
+		{ "skill": "TypeScript" },
+		{ "skill": "HTML" },
+		{ "skill": "CSS" },
+		{ "skill": "Dart" },
+		{ "skill": "React" },
+		{ "skill": "Angular" },
+		{ "skill": "Kotlin" }
+	]
+}
