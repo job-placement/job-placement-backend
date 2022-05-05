@@ -23,10 +23,10 @@ Skill.belongsToMany(Job, { through: 'JobSkill' });
 // Tool.belongsToMany(Job, { through: 'JobTool' });
 
 module.exports = {
-    Job,
-    Language,
-    Skill,
-    Tool,
-    User,
-    db
+	Job,
+	Language,
+	Skill,
+	Tool,
+	User,
+	db
 };
