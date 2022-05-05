@@ -35,9 +35,9 @@ User.init({
 	image: DataTypes.STRING,
 	resume: DataTypes.STRING,
 	bio: DataTypes.STRING,
-	experience: DataTypes.NUMBER,
+	experience: DataTypes.INTEGER,
 	isEmployer: DataTypes.BOOLEAN
-} , {
+}, {
 	sequelize: db,
 	timestamps: false,
 });
