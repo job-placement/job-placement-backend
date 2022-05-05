@@ -4,7 +4,7 @@ class Language extends Model {};
 
 Language.init({
   name: DataTypes.STRING
-} , {
+}, {
 	sequelize: db,
 	timestamps: false,
 });

@@ -9,7 +9,7 @@ const { db } = require('../db');
 Job.belongsToMany(User, { through: 'Apply' });
 User.belongsToMany(Job, { through: 'Apply' });
 
-// creates a mode called JobTool with JobId, ToolId
+// creates a mode called JobTool with JobId, SkillId
 Job.belongsToMany(Skill, { through: 'JobSkill' });
 Skill.belongsToMany(Job, { through: 'JobSkill' });
 
@@ -23,10 +23,10 @@ Skill.belongsToMany(Job, { through: 'JobSkill' });
 // Tool.belongsToMany(Job, { through: 'JobTool' });
 
 module.exports = {
-    Job,
-    Language,
-    Skill,
-    Tool,
-    User,
-    db
+	Job,
+	Language,
+	Skill,
+	Tool,
+	User,
+	db
 };

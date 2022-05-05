@@ -4,7 +4,7 @@ class Skill extends Model {};
 
 Skill.init({
   name: DataTypes.STRING
-} , {
+}, {
 	sequelize: db,
 	timestamps: false,
 });

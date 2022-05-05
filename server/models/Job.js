@@ -10,10 +10,10 @@ Job.init({
   position: DataTypes.STRING,
   role: DataTypes.STRING,
   level: DataTypes.STRING,
-  postedAt: DataTypes.DATE,
+  postedAt: DataTypes.STRING,
   contract: DataTypes.STRING,
   location: DataTypes.STRING
-} , {
+}, {
 	sequelize: db,
 	timestamps: false,
 });
