@@ -1,12 +1,13 @@
 {
-  "name": "placementbe",
+  "name": "placement",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "node server/seed",
-    "testDB": "node server/db.js"
+    "testDB": "node server/db.js",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
