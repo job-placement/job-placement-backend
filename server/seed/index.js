@@ -3,7 +3,7 @@ const fs = require('fs').promises;
 const { Client } = require('pg');
 
 const pkg = require('../../package.json');
-const { Job, Skill, User, db } = require('../models');
+const { Job, Skill, User, Application, JobSkill, db } = require('../models');
 
 // creates a database called placement
 const createDB = async (connectDB) => {
@@ -45,16 +45,22 @@ const seed = async () => {
 		const jobPath = path.join(__dirname, 'Job.json');
 		const skillPath = path.join(__dirname, 'Skill.json');
 		const userPath = path.join(__dirname, 'User.json');
+		const applicationPath = path.join(__dirname, 'Application.json');
+		const jobSkillPath = path.join(__dirname, 'JobSkill.json');
 
 		// store the data as a buffer from the json file
 		const jobBuffer = await fs.readFile(jobPath);
 		const skillBuffer = await fs.readFile(skillPath);
 		const userBuffer = await fs.readFile(userPath);
+		const applicationBuffer = await fs.readFile(applicationPath);
+		const jobSkillBuffer = await fs.readFile(jobSkillPath);
 
 		// convert the buffer into a string to parse it to json
 		const { jobs } = JSON.parse(String(jobBuffer));
 		const { skills } = JSON.parse(String(skillBuffer));
 		const { users } = JSON.parse(String(userBuffer));
+		const { applications } = JSON.parse(String(applicationBuffer));
+		const { jobSkills } = JSON.parse(String(jobSkillBuffer));
 
 		// loop through each json object and insert data into the table
 		const jobPromises = jobs.map(job => Job.create(job));
@@ -65,6 +71,13 @@ const seed = async () => {
 		await Promise.all(jobPromises);
 		await Promise.all(skillPromises);
 		await Promise.all(userPromises);
+
+		// Job, Skill, and User table must be created before these table
+		const applicationPromises = applications.map(application => Application.create(application));
+		const jobSkillPromises = jobSkills.map(jobSkill => JobSkill.create(jobSkill));
+	
+		await Promise.all(applicationPromises);
+		await Promise.all(jobSkillPromises);
 
 		console.log('\033[32m', `Data have been successfully added to your database`, '\033[0m');
 	} catch(error) {

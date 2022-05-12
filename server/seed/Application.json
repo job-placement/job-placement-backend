@@ -1,5 +1,5 @@
 {
-	"applied": [
+	"applications": [
 		{ "JobId": 1, "UserId": 1 },
 		{ "JobId": 2, "UserId": 1 },
 		{ "JobId": 5, "UserId": 1 },
