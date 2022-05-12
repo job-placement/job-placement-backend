@@ -1,0 +1,22 @@
+{
+	"applied": [
+		{ "JobId": 1, "UserId": 1 },
+		{ "JobId": 2, "UserId": 1 },
+		{ "JobId": 5, "UserId": 1 },
+		{ "JobId": 2, "UserId": 2 },
+		{ "JobId": 4, "UserId": 3 },
+		{ "JobId": 8, "UserId": 3 },
+		{ "JobId": 10, "UserId": 4 },
+		{ "JobId": 6, "UserId": 6 },
+		{ "JobId": 1, "UserId": 7 },
+		{ "JobId": 3, "UserId": 7 },
+		{ "JobId": 10, "UserId": 7 },
+		{ "JobId": 1, "UserId": 8 },
+		{ "JobId": 3, "UserId": 8 },
+		{ "JobId": 1, "UserId": 10 },
+		{ "JobId": 3, "UserId": 10 },
+		{ "JobId": 5, "UserId": 10 },
+		{ "JobId": 8, "UserId": 10 },
+		{ "JobId": 10, "UserId": 10 }
+	]
+}

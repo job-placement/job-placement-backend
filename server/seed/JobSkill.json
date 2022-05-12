@@ -1,0 +1,23 @@
+{
+	"jobSkills": [
+		{ "JobId": 1, "SkillId": 13 },
+		{ "JobId": 1, "SkillId": 14 },
+		{ "JobId": 1, "SkillId": 2 },
+		{ "JobId": 2, "SkillId": 3 },
+		{ "JobId": 2, "SkillId": 16 },
+		{ "JobId": 3, "SkillId": 2 },
+		{ "JobId": 3, "SkillId": 16 },
+		{ "JobId": 4, "SkillId": 14 },
+		{ "JobId": 4, "SkillId": 2 },
+		{ "JobId": 5, "SkillId": 2 },
+		{ "JobId": 5, "SkillId": 8 },
+		{ "JobId": 6, "SkillId": 8 },
+		{ "JobId": 7, "SkillId": 13 },
+		{ "JobId": 7, "SkillId": 2 },
+		{ "JobId": 8, "SkillId": 2 },
+		{ "JobId": 9, "SkillId": 2 },
+		{ "JobId": 9, "SkillId": 3 },
+		{ "JobId": 10, "SkillId": 2 },
+		{ "JobId": 10, "SkillId": 16 }
+	]
+}
