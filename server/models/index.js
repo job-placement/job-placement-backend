@@ -1,32 +1,23 @@
 const { Job } = require('./Job');
-const { Language } = require('./Language');
 const { Skill } = require('./Skill');
-const { Tool } = require('./Tool');
 const { User } = require('./User');
+const { Application } = require('./Application');
+const { JobSkill } = require('./JobSkill');
 const { db } = require('../db');
 
 // creates a mode called Apply with JobId, UserId
-Job.belongsToMany(User, { through: 'Apply' });
-User.belongsToMany(Job, { through: 'Apply' });
+Job.belongsToMany(User, { through: Application });
+User.belongsToMany(Job, { through: Application });
 
 // creates a mode called JobTool with JobId, SkillId
-Job.belongsToMany(Skill, { through: 'JobSkill' });
-Skill.belongsToMany(Job, { through: 'JobSkill' });
-
-// Use this these relation if we use Language and Tool model
-// creates a mode called JobLang with JobId, LanguageId
-// Job.belongsToMany(Language, { through: 'JobLang' });
-// Language.belongsToMany(Job, { through: 'JobLang' });
-
-// creates a mode called JobTool with JobId, ToolId
-// Job.belongsToMany(Tool, { through: 'JobTool' });
-// Tool.belongsToMany(Job, { through: 'JobTool' });
+Job.belongsToMany(Skill, { through: JobSkill });
+Skill.belongsToMany(Job, { through: JobSkill });
 
 module.exports = {
 	Job,
-	Language,
 	Skill,
-	Tool,
 	User,
+	Application,
+	JobSkill,
 	db
 };
