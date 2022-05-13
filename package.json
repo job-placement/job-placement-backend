@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "node server/seed",
+    "testDB": "node server/db.js",
     "start": "node app.js"
   },
   "repository": {
