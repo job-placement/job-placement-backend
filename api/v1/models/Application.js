@@ -1,4 +1,4 @@
-const { db, DataTypes, Model } = require('../db');
+const { db, DataTypes, Model } = require('../../../server/db');
 const { Job } = require('./Job.js');
 const { User } = require('./User.js');
 
