@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-app.use('/api', require('./server/api'));
+app.use('/api', require('./api/v1/controllers'));
 
 app.get('/', (req, res) => {
     res.send('Amazing app to find jobs');

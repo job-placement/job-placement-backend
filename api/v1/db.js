@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 
-const pkg = require('../package.json');
+const pkg = require('../../package.json');
 
 // creates an instance of database called by the apps name
 const db = new Sequelize(
