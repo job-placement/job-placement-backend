@@ -2,8 +2,8 @@ const path = require('path');
 const fs = require('fs').promises;
 const { Client } = require('pg');
 
-const pkg = require('../../../package.json');
-const { Job, Skill, User, Application, JobSkill, db } = require('../models');
+const pkg = require('../../package.json');
+const { Job, Skill, User, Application, JobSkill, db } = require('../../api/v1/models');
 
 // creates a database called placement
 const createDB = async (connectDB) => {

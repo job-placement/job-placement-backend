@@ -3,7 +3,7 @@ const { Skill } = require('./Skill');
 const { User } = require('./User');
 const { Application } = require('./Application');
 const { JobSkill } = require('./JobSkill');
-const { db } = require('../db');
+const { db } = require('../../../server/db');
 
 // creates a mode called Apply with JobId, UserId
 Job.belongsToMany(User, { through: Application });
