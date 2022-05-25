@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/cesarsnina/placement-backend#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.3",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
