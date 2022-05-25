@@ -1,8 +1,16 @@
-const { db, DataTypes, Model } = require('../../../server/db');
+// const { db, DataTypes, Model } = require('../../../server/db');
+const { db } = require('../../../server/db');
+const { Sequelize, DataTypes, Model } = require('sequelize');
+
 
 class User extends Model {};
 
 User.init({
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
 	firstName: { 
 		type: DataTypes.STRING,
 		allowNull: false,
