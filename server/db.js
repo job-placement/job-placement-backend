@@ -10,15 +10,15 @@ const db = new Sequelize(
   }
 );
 
-// Test in the instance is properly connected and working
-const testDatabaseConnection = async () => {
-  try {
-    await db.authenticate();
-    console.log('\033[32m', 'Connection has been established successfully.', '\033[0m');
-  } catch (error) {
-    console.error('\033[31m', `Unable to connect to the database: ${error}`, '\033[0m');
-  }
-}
-testDatabaseConnection();
+// Test if the instance is properly connected
+// const testDatabaseConnection = async () => {
+//   try {
+//     const connection = await db.authenticate();
+//     console.log('Connection has been established successfully.');
+//   } catch (error) {
+//     console.error(`Unable to connect to the database: ${error}`);
+//   }
+// }
+// testDatabaseConnection();
 
 module.exports = { db, DataTypes, Model };
