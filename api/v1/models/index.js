@@ -3,7 +3,7 @@ const { Skill } = require('./Skill');
 const { User } = require('./User');
 const { Application } = require('./Application');
 const { JobSkill } = require('./JobSkill');
-const { db } = require('../db');
+const { db } = require('../../../server/db');
 
 // Application Model show which Users who applied to the Jobs
 Job.belongsToMany(User, { through: Application });

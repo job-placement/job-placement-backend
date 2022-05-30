@@ -1,8 +1,16 @@
-const { db, DataTypes, Model } = require('../db');
+// const { db, DataTypes, Model } = require('../../../server/db');
+const { db } = require('../../../server/db');
+const { Sequelize, DataTypes, Model } = require('sequelize');
+
 
 class Job extends Model {};
 
 Job.init({
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
   company: DataTypes.STRING,
   logo: DataTypes.STRING,
   new: DataTypes.BOOLEAN,
