@@ -2,7 +2,7 @@ const {
   Job,
   Skill,
   User,
-  db } = require('../server/models');
+  db } = require('../api/v1/models');
 const { Sequelize } = require('sequelize');
 
 describe.only('Database, Sequelize and Models', () => {
