@@ -6,6 +6,7 @@ CRUD actions
 
 const { User } = require('../models/index')
 const bcrypt = require('bcrypt');
+const res = require('express/lib/response');
 
 const getUsers = async (request, response, next) => {
   try {
@@ -16,25 +17,34 @@ const getUsers = async (request, response, next) => {
   }
 }
 
+// Not sure if it is useful || or how we are going to render angular files here
+// server side tenplate engines might be easier to render(handlebar, pug ....) 
 const getLogin = async (request, response, next) => {
   try {
     // TODO: send user to login page
+     //response.render('some file')
   } catch (e) {
     console.log(e)
   }
 }
-
+// will need passport configuration to complete login action
 const postLogin = async (request, response, next) => {
   try {
+    // passport.authenticate("local", {
+    //   successRedirect: "/",
+    //   failureRedirect: "/login",
+    //   failureFlash: true,
+    // })
 
   } catch (e) {
     console.log(e)
   }
 }
-
+// Not sure if it is useful || or how we are going to render angular files here
+// server side tenplate engines might be easier to render(handlebar, pug ....) 
 const getSignup = async (request, response, next) => {
   try {
-
+    //response.render('some file')
   } catch (e) {
     console.log(e)
   }
@@ -58,19 +68,23 @@ const postSignup = async (request, response, next) => {
       });
 
       if (userCreated) {
+        //response.rediect("/login")
         response.send("A new user has been created");
       }
     })
-    
-
   } catch (e) {
+    //response.rediect("/signup")
     console.log(e)
   }
 }
-
+// will need passport configuration to complete login action
 const postLogout = async (request, response, next) => {
   try {
-
+    // req.logOut(function (err) {
+    //   if (err) {
+    //     return next(err);
+    //   }
+    //response.redirect("/login");
   } catch (e) {
     console.log(e)
   }
