@@ -11,6 +11,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
+app.use(cors());
+
 // app.use('/api', require('./server/api'));
 
 // app.get('/', (req, res) => {

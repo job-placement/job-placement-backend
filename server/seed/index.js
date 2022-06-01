@@ -6,33 +6,40 @@ const pkg = require('../../package.json');
 const { Job, Skill, User, Application, JobSkill, db } = require('../../api/v1/models');
 
 // creates a database called placement
-const createDB = async (connectDB) => {
-  // creaing a client with connection information
-  const client = new Client({
-    user: "postgres",
-    password: "postgres",
-    database: "postgres",
-    host: "localhost",
-    port: 5432
-  });
+const createDB = async () => {
+	try {
+		// creaing a client with connection information
+		const client = await new Client({
+			user: "postgres",
+			password: "postgres",
+			database: "postgres",
+			host: "localhost",
+			port: 5432
+		});
 
-  // open the connection for the client
-  client.connect();
+		// open the connection for the client
+		await client.connect();
 
-  // create a database called the name of the project (placement)
-  client.query(`CREATE DATABASE ${pkg.name}`, (error, res) => {
-    if (error) {
-        console.error('\033[31m', error.message, '\033[0m');
-    } else {
-        console.log('\033[32m', `Database ${pkg.name} created`, '\033[0m');
-    }
+		// create a database called the name of the project (placement)
+		await client.query(`CREATE DATABASE ${pkg.name}`, async (error, res) => {
+			try {
+				if (error) {
+					console.log(error.message);
+				} else {
+					console.log(`Database ${pkg.name} created`);
+				}
+				// close the connection for the client
+				await client.end();
 
-    // close the connection for the client
-    client.end();
-
-    // seed function will populate the database
-    seed();
-  });
+				// seed function will populate the database
+				await seed();
+			} catch(error) {
+				console.log(error.message);
+			}
+		});
+	} catch(error) {
+		console.log(error.message);
+	}
 };
 
 // populate the table in the database
@@ -63,26 +70,32 @@ const seed = async () => {
 		const { jobSkills } = JSON.parse(String(jobSkillBuffer));
 
 		// loop through each json object and insert data into the table
-		const jobPromises = jobs.map(job => Job.create(job));
 		const skillPromises = skills.map(skill => Skill.create(skill));
 		const userPromises = users.map(user => User.create(user));
 
 		// make sure all the promise are resolved
-		await Promise.all(jobPromises);
-		await Promise.all(skillPromises);
-		await Promise.all(userPromises);
+		const skill = await Promise.all(skillPromises);
+		const user = await Promise.all(userPromises);
+
+		// User table must be created before the Job table
+		const jobPromises = jobs.map(job => Job.create(job));
+		const job = await Promise.all(jobPromises);
 
 		// Job, Skill, and User table must be created before these table
 		const applicationPromises = applications.map(application => Application.create(application));
 		const jobSkillPromises = jobSkills.map(jobSkill => JobSkill.create(jobSkill));
 	
-		await Promise.all(applicationPromises);
-		await Promise.all(jobSkillPromises);
+		const application = await Promise.all(applicationPromises);
+		const jobSkill = await Promise.all(jobSkillPromises);
 
-		console.log('\033[32m', `Data have been successfully added to your database`, '\033[0m');
+		console.log(`Data have been successfully added to your database`);
 	} catch(error) {
-    console.error('\033[31m', error, '\033[0m');
+    console.error(error);
 	}
 }
 
-createDB();
+if (module === require.main) {
+	createDB();
+}
+
+module.exports = { seed };

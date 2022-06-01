@@ -10,7 +10,8 @@
       "level": "Senior",
       "postedAt": "1d ago",
       "contract": "Full Time",
-      "location": "USA Only"
+      "location": "USA Only",
+      "UserId": 5
     },
     {
       "company": "Manage",
@@ -22,7 +23,8 @@
       "level": "Midweight",
       "postedAt": "1d ago",
       "contract": "Part Time",
-      "location": "Remote"
+      "location": "Remote",
+      "UserId": 5
     },
     {
       "company": "Account",
@@ -34,7 +36,8 @@
       "level": "Junior",
       "postedAt": "2d ago",
       "contract": "Part Time",
-      "location": "USA Only"
+      "location": "USA Only",
+      "UserId": 5
     },
     {
       "company": "MyHome",
@@ -46,7 +49,8 @@
       "level": "Junior",
       "postedAt": "5d ago",
       "contract": "Contract",
-      "location": "USA Only"
+      "location": "USA Only",
+      "UserId": 5
     },
     {
       "company": "Loop Studios",
@@ -58,7 +62,8 @@
       "level": "Midweight",
       "postedAt": "1w ago",
       "contract": "Full Time",
-      "location": "Worldwide"
+      "location": "Worldwide",
+      "UserId": 5
     },
     {
       "company": "FaceIt",
@@ -70,7 +75,8 @@
       "level": "Junior",
       "postedAt": "2w ago",
       "contract": "Full Time",
-      "location": "UK Only"
+      "location": "UK Only",
+      "UserId": 9
     },
     {
       "company": "Shortly",
@@ -82,7 +88,8 @@
       "level": "Junior",
       "postedAt": "2w ago",
       "contract": "Full Time",
-      "location": "Worldwide"
+      "location": "Worldwide",
+      "UserId": 9
     },
     {
       "company": "Insure",
@@ -94,7 +101,8 @@
       "level": "Junior",
       "postedAt": "2w ago",
       "contract": "Full Time",
-      "location": "USA Only"
+      "location": "USA Only",
+      "UserId": 9
     },
     {
       "company": "Eyecam Co.",
@@ -106,7 +114,8 @@
       "level": "Midweight",
       "postedAt": "3w ago",
       "contract": "Full Time",
-      "location": "Worldwide"
+      "location": "Worldwide",
+      "UserId": 9
     }, 
     {
       "company": "The Air Filter Company",
@@ -118,7 +127,8 @@
       "level": "Junior",
       "postedAt": "1mo ago",
       "contract": "Part Time",
-      "location": "Worldwide"
+      "location": "Worldwide",
+      "UserId": 9
     }
   ]
 }

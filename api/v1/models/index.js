@@ -5,11 +5,15 @@ const { Application } = require('./Application');
 const { JobSkill } = require('./JobSkill');
 const { db } = require('../../../server/db');
 
-// creates a mode called Apply with JobId, UserId
+// Application Model show which Users who applied to the Jobs
 Job.belongsToMany(User, { through: Application });
 User.belongsToMany(Job, { through: Application });
 
-// creates a mode called JobTool with JobId, SkillId
+// User can create jobs, Job Model will have a column "UserId"
+User.hasMany(Job);
+Job.belongsTo(User);
+
+// JobSkill Model show which Skills are in the jobs
 Job.belongsToMany(Skill, { through: JobSkill });
 Skill.belongsToMany(Job, { through: JobSkill });
 

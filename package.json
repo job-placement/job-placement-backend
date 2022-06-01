@@ -1,10 +1,14 @@
 {
   "name": "placement",
+  "jest": {
+    "bail": 100,
+    "verbose": true
+  },
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node server/seed & jest --detectOpenHandles",
     "seed": "node server/seed",
     "start": "nodemon server/app.js"
   },

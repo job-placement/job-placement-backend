@@ -23,7 +23,8 @@ Job.init({
   location: DataTypes.STRING
 }, {
 	sequelize: db,
-	timestamps: false,
+	timestamps: true,
+  createAt: true
 });
 
 module.exports = { Job };
