@@ -20,7 +20,8 @@ Job.init({
   level: DataTypes.STRING,
   postedAt: DataTypes.STRING,
   contract: DataTypes.STRING,
-  location: DataTypes.STRING
+  location: DataTypes.STRING,
+  UserId: DataTypes.INTEGER
 }, {
 	sequelize: db,
 	timestamps: true,
