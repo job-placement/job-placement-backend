@@ -6,7 +6,6 @@ CRUD actions
 
 const { User } = require('../models/index')
 const bcrypt = require('bcrypt');
-const res = require('express/lib/response');
 
 const getUsers = async (request, response, next) => {
   try {
