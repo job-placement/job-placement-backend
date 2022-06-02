@@ -77,7 +77,6 @@ const editJob = async (request, response, next) => {
 
 const deleteJob = async (request, response, next) => {
   try {
-    const 
   } catch (e) {
     console.log(e)
   }
