@@ -11,7 +11,7 @@ User.belongsToMany(Job, { through: Application });
 
 // User can create jobs, Job Model will have a column "UserId"
 User.hasMany(Job);
-Job.belongsTo(User);
+Job.belongsTo(User, { onDelete: 'cascade'});
 
 // JobSkill Model show which Skills are in the jobs
 Job.belongsToMany(Skill, { through: JobSkill });

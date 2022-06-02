@@ -4,12 +4,14 @@ CRUD actions
 
 */
 
-const { User } = require('../models/index')
+const { User, Job } = require('../models/index')
 const bcrypt = require('bcrypt');
 
 const getUsers = async (request, response, next) => {
   try {
-    const users = await User.findAll()
+    const users = await User.findAll({
+      include:Job
+    })
     response.json(users)
   } catch (e) {
     console.log(e)
@@ -38,8 +40,10 @@ const updateUser = async (request, response, next) => {
 const deleteUser = async (request, response, next) => {
   try {
     const userToDelete = await User.findByPk(request.params.id);
-    await userToDelete.destroy()
-    response.status(201).send("user has been deleted");
+    const userDeteleted = await userToDelete.destroy()
+    if(userDeteleted){
+      response.status(201).send("user has been deleted");
+    }
   } catch (e) {
     console.log(e)
   }

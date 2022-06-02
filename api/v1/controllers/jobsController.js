@@ -25,7 +25,8 @@ const createJob = async (request, response, next) => {
           determine if PK is available in POSTMAN
           if not then find user by JWT?
     */
-    const user = await User.findByPK(request.body.userId)
+    // commented out for testing purpose
+    //const user = await User.findByPK(request.body.userId)
 
     const newJobData = {
       company: request.body.company,
@@ -38,10 +39,13 @@ const createJob = async (request, response, next) => {
       postedAt: request.body.postedAt,
       contract: request.body.contract,
       location: request.body.location,
-      UserId: user.id
+      // commented out for testing purpose
+      // UserId: user.id
+      UserId: request.body.UserId
     }
 
     await Job.create(newJobData)
+    response.send("A new Job has been created")
 
   } catch (e) {
     console.log(e)
