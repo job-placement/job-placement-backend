@@ -24,7 +24,7 @@ Job.init({
 }, {
 	sequelize: db,
 	timestamps: true,
-  createAt: true
+  // createAt: true
 });
 
 module.exports = { Job };
