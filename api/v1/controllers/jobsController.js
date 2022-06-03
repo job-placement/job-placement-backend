@@ -21,15 +21,38 @@ const getJobs = async (request, response, next) => {
   }
 }
 
+const getJobById = async (request, response, next) => {
+  try {
+    const jobs = await Job.find({
+      where: {
+        id: request.body.jobId
+      },
+      include: Skill
+    })
+    response.json(job)
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 const createJob = async (request, response, next) => {
   try {
+
     /* 
     TODO: create global currentUser
           determine if PK is available in POSTMAN
           if not then find user by JWT?
+    
+          create new Skill instance and include to new Job instance
+          const amidala = await User.create({ username: 'p4dm3', points: 1000 });
+          const queen = await Profile.create({ name: 'Queen' });
+          await amidala.addProfile(queen, { through: { selfGranted: false } });
+          const result = await User.findOne({
+            where: { username: 'p4dm3' },
+            include: Profile
+          });
+          console.log(result);
     */
-    // commented out for testing purpose
-    //const user = await User.findByPK(request.body.userId)
 
     const newJobData = {
       company: request.body.company,
