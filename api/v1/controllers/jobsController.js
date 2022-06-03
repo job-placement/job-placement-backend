@@ -23,9 +23,9 @@ const getJobs = async (request, response, next) => {
 
 const getJobById = async (request, response, next) => {
   try {
-    const jobs = await Job.find({
+    const job = await Job.findAll({
       where: {
-        id: request.body.jobId
+        id: request.params.jobId
       },
       include: Skill
     })

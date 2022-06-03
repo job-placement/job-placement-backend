@@ -20,7 +20,7 @@ const getUsers = async (request, response, next) => {
 
 const updateUser = async (request, response, next) => {
   try {
-    const userToUpdate = await User.findByPk(request.params.id);
+    const userToUpdate = await User.findByPk(request.params.userId);
     bcrypt.hash(request.body.password, 3, async function(err, encrypted){
     const updatedUser = await userToUpdate.update({
       firstName: request.body.firstName,
