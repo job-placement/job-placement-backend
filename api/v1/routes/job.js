@@ -12,6 +12,7 @@ TODO: finish building remaining endpoints to support CRUD actions
 */
 router.post('/jobs', jobsController.createJob)
 router.get('/jobs', jobsController.getJobs)
+router.get('/jobs/:jobId', jobsController.getJobById)
 
 
 module.exports = router

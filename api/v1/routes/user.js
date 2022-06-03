@@ -15,9 +15,9 @@ router.route('/login')
 
 router.get('/users', usersController.getUsers)
 
-router.put('/users/:id', usersController.updateUser)
+router.put('/users/:userId', usersController.updateUser)
 
-router.delete('/users/:id', usersController.deleteUser)
+router.delete('/users/:userId', usersController.deleteUser)
 
 router.get('/login', usersController.getLogin)
 
