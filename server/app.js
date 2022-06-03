@@ -22,9 +22,11 @@ app.use(cors());
 
 const userRoutes = require('../api/v1/routes/user')
 const jobRoutes = require('../api/v1/routes/job')
+const skillRoutes = require('../api/v1/routes/skill')
 
 app.use(userRoutes)
 app.use(jobRoutes)
+app.use(skillRoutes)
 
 
 /* Error handling redirects
