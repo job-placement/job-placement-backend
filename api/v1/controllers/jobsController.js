@@ -118,5 +118,6 @@ module.exports = {
   getJobs,
   createJob,
   editJob,
-  deleteJob
+  deleteJob,
+  getJobById
 }
