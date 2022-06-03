@@ -6,12 +6,15 @@ CRUD actions
 
 const { Job } = require('../models/index')
 const { User } = require('../models/index')
+const { Skill } = require('../models/index')
 
 
 
 const getJobs = async (request, response, next) => {
   try {
-    const jobs = await Job.findAll()
+    const jobs = await Job.findAll({
+      include: Skill
+    })
     response.json(jobs)
   } catch (e) {
     console.log(e)
@@ -81,6 +84,7 @@ const editJob = async (request, response, next) => {
 
 const deleteJob = async (request, response, next) => {
   try {
+    const jobToDelete = await Job.find({ WHERE: { id: request.body.jobId }})
   } catch (e) {
     console.log(e)
   }
@@ -89,5 +93,7 @@ const deleteJob = async (request, response, next) => {
 
 module.exports = {
   getJobs,
-  createJob
+  createJob,
+  editJob,
+  deleteJob
 }
