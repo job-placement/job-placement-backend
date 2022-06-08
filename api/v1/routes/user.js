@@ -15,6 +15,8 @@ router.route('/login')
 
 router.get('/users', usersController.getUsers)
 
+router.get('/users/:userId', usersController.getUserById)
+
 router.put('/users/:userId', usersController.updateUser)
 
 router.delete('/users/:userId', usersController.deleteUser)
