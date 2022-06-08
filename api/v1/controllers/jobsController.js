@@ -35,6 +35,22 @@ const getJobById = async (request, response, next) => {
   }
 }
 
+const getJobByUser = async (request, response, next) => {
+  try {
+    const user = await User.findByPk(request.params.userId)
+    const job = await Job.findAll({
+      where: {
+        id: request.params.jobId
+      },
+      include: Skill
+    })
+    response.json({user: user, job: job})
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+
 const createJob = async (request, response, next) => {
   try {
 
@@ -53,7 +69,9 @@ const createJob = async (request, response, next) => {
           });
           console.log(result);
     */
-
+    
+    const user = await User.findByPk(request.params.userId)
+    
     const newJobData = {
       company: request.body.company,
       logo: request.body.company,
@@ -65,13 +83,21 @@ const createJob = async (request, response, next) => {
       postedAt: request.body.postedAt,
       contract: request.body.contract,
       location: request.body.location,
-      // commented out for testing purpose
-      // UserId: user.id
-      UserId: request.body.UserId
     }
 
-    await Job.create(newJobData)
-    response.send("A new Job has been created")
+    const newJob = await Job.create(newJobData)
+    await user.addJob(newJob)
+
+    const result = await User.findAll( {
+      where: {
+        id: request.params.userId
+      },
+      include: Job
+    })
+
+    console.log(result)
+
+    response.json(newJob)
 
   } catch (e) {
     console.log(e)
@@ -107,7 +133,8 @@ const editJob = async (request, response, next) => {
 
 const deleteJob = async (request, response, next) => {
   try {
-    const jobToDelete = await Job.find({ WHERE: { id: request.body.jobId }})
+    const jobToDelete = await Job.destroy({ WHERE: { id: request.body.jobId }})
+
   } catch (e) {
     console.log(e)
   }
@@ -116,6 +143,7 @@ const deleteJob = async (request, response, next) => {
 
 module.exports = {
   getJobs,
+  getJobByUser,
   createJob,
   editJob,
   deleteJob,
