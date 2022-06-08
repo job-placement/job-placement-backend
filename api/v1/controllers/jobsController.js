@@ -107,8 +107,8 @@ const createJob = async (request, response, next) => {
 const editJob = async (request, response, next) => {
   try {
     
-    const user = await User.findByPK(request.params.userId)
-    const job = await Job.findByPK(request.params.jobId) //request.params.jobId ??
+    const user = await User.findByPk(request.params.userId)
+    const job = await Job.findByPk(request.params.jobId) //request.params.jobId ??
 
     job.set({
       company: request.body.company,
