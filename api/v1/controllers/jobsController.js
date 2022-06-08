@@ -96,20 +96,19 @@ const createJob = async (request, response, next) => {
       postedAt: request.body.postedAt,
       contract: request.body.contract,
       location: request.body.location,
-    }, {
-      include: user
+      UserId: request.params.userId
     }
     )
     
 
-    const result = await User.findAll( {
-      where: {
-        id: request.params.userId
-      },
-      include: Job
-    })
+    // const result = await User.findAll( {
+    //   where: {
+    //     id: request.params.userId
+    //   },
+    //   include: Job
+    // })
 
-    console.log(result)
+    // console.log(result)
 
     response.json(newJob)
 
@@ -147,7 +146,11 @@ const editJob = async (request, response, next) => {
 
 const deleteJob = async (request, response, next) => {
   try {
-    const jobToDelete = await Job.destroy({ WHERE: { id: request.body.jobId }})
+    const jobToDelete = await Job.destroy({ where: { id: request.params.jobId }})
+    if(!!jobToDelete){
+       response.send('job deleted')
+    }
+   
 
   } catch (e) {
     console.log(e)
