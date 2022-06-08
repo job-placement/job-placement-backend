@@ -72,7 +72,20 @@ const createJob = async (request, response, next) => {
     
     const user = await User.findByPk(request.params.userId)
     
-    const newJobData = {
+    // const newJobData = {
+    //   company: request.body.company,
+    //   logo: request.body.company,
+    //   new: true,
+    //   featued: false,
+    //   position: request.body.position,
+    //   role: request.body.role,
+    //   level: request.body.level,
+    //   postedAt: request.body.postedAt,
+    //   contract: request.body.contract,
+    //   location: request.body.location,
+    // }
+
+    const newJob = await Job.create({
       company: request.body.company,
       logo: request.body.company,
       new: true,
@@ -83,10 +96,11 @@ const createJob = async (request, response, next) => {
       postedAt: request.body.postedAt,
       contract: request.body.contract,
       location: request.body.location,
+    }, {
+      include: user
     }
-
-    const newJob = await Job.create(newJobData)
-    await user.addJob(newJob)
+    )
+    
 
     const result = await User.findAll( {
       where: {
