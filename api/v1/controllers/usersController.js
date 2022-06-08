@@ -18,6 +18,21 @@ const getUsers = async (request, response, next) => {
   }
 }
 
+const getUserById = async (request, response, next) => {
+  try {
+    const userId = request.params.userId
+    const user = await User.findAll({
+      where:  {
+        id: userId
+      },
+      include: Job
+    })
+    response.json(user)
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 const updateUser = async (request, response, next) => {
   try {
     const userToUpdate = await User.findByPk(request.params.userId);
@@ -124,6 +139,7 @@ const postLogout = async (request, response, next) => {
 
 module.exports = {
   getUsers,
+  getUserById,
   updateUser,
   deleteUser,
   getLogin,
