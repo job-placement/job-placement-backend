@@ -124,7 +124,7 @@ const editJob = async (request, response, next) => {
     })
 
     await job.save()
-
+    response.json(job)
   } catch (e) {
     console.log(e)
   }
