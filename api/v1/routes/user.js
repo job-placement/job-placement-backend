@@ -3,6 +3,7 @@ const router = express.Router()
 const { body } = require('express-validator')
 const User = require('../models/User')
 const usersController = require('../controllers/usersController')
+const jwtCheck =  require ("../../../server/app")
 
 /*
 TODO: apply DRY principle to redundant endpoint addresses
@@ -13,13 +14,13 @@ router.route('/login')
 
 */
 
-router.get('/users', usersController.getUsers)
+router.get('/users', jwtCheck, usersController.getUsers)
 
-router.get('/users/:userId', usersController.getUserById)
+router.get('/users/:userId',jwtCheck, usersController.getUserById)
 
-router.put('/users/:userId', usersController.updateUser)
+router.put('/users/:userId',jwtCheck, usersController.updateUser)
 
-router.delete('/users/:userId', usersController.deleteUser)
+router.delete('/users/:userId',jwtCheck, usersController.deleteUser)
 
 router.get('/login', usersController.getLogin)
 

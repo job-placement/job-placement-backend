@@ -7,6 +7,7 @@ CRUD actions
 const { User, Job } = require('../models/index')
 const bcrypt = require('bcrypt');
 
+
 const getUsers = async (request, response, next) => {
   try {
     const users = await User.findAll({
@@ -76,15 +77,25 @@ const getLogin = async (request, response, next) => {
 }
 // will need passport configuration to complete login action
 const postLogin = async (request, response, next) => {
-  try {
-    // passport.authenticate("local", {
-    //   successRedirect: "/",
-    //   failureRedirect: "/login",
-    //   failureFlash: true,
-    // })
-
-  } catch (e) {
-    console.log(e)
+  //find a user in the db by matching the name in the req.body
+  const thisUser = await User.findOne({
+    where: {email: req.body.email}
+  })
+  //if found ,compare user password to a hash from db
+  if(!thisUser){
+    response.send('user not found')
+  }
+  else{
+    bcrypt.compare(req.body.password, thisUser.password, async function(err, name){
+      if(name){
+        //res.send(`Logged as, ${thisUser.name}`)
+        let user = thisUser.name
+        response.status(200).send({"loginAs":user})
+      }
+      else{
+        response.send('password do not match')
+      }
+    }) 
   }
 }
 // Not sure if it is useful || or how we are going to render angular files here
