@@ -1,8 +1,6 @@
 /** @format */
 
-// const { db, DataTypes, Model } = require('../../../server/db');
-const { db } = require("../../../server/db");
-const { Sequelize, DataTypes, Model } = require("sequelize");
+const { db, DataTypes, Model } = require('../../../server/db');
 
 class Job extends Model {}
 

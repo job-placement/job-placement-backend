@@ -4,8 +4,9 @@ CRUD actions
 
 */
 
-const { User, Job } = require('../models/index')
+const { User, Job } = require('../models/index');
 const bcrypt = require('bcrypt');
+const passport = require('passport');
 
 const getUsers = async (request, response, next) => {
   try {
@@ -16,7 +17,7 @@ const getUsers = async (request, response, next) => {
   } catch (e) {
     console.log(e)
   }
-}
+};
 
 const getUserById = async (request, response, next) => {
   try {
@@ -31,7 +32,7 @@ const getUserById = async (request, response, next) => {
   } catch (e) {
     console.log(e)
   }
-}
+};
 
 const updateUser = async (request, response, next) => {
   try {
@@ -50,7 +51,7 @@ const updateUser = async (request, response, next) => {
 } catch (e) {
     console.log(e)
   }
-}
+};
 
 const deleteUser = async (request, response, next) => {
   try {
@@ -62,90 +63,69 @@ const deleteUser = async (request, response, next) => {
   } catch (e) {
     console.log(e)
   }
-}
-
-// Not sure if it is useful || or how we are going to render angular files here
-// server side tenplate engines might be easier to render(handlebar, pug ....) 
-const getLogin = async (request, response, next) => {
-  try {
-    // TODO: send user to login page
-     //response.render('some file')
-  } catch (e) {
-    console.log(e)
-  }
-}
-// will need passport configuration to complete login action
-const postLogin = async (request, response, next) => {
-  try {
-    // passport.authenticate("local", {
-    //   successRedirect: "/",
-    //   failureRedirect: "/login",
-    //   failureFlash: true,
-    // })
-
-  } catch (e) {
-    console.log(e)
-  }
-}
-// Not sure if it is useful || or how we are going to render angular files here
-// server side tenplate engines might be easier to render(handlebar, pug ....) 
-const getSignup = async (request, response, next) => {
-  try {
-    //response.render('some file')
-  } catch (e) {
-    console.log(e)
-  }
-}
+};
 
 const postSignup = async (request, response, next) => {
-  try {
-    const newUser = {
-      firstName: request.body.firstName,
-      lastName: request.body.lastName,
-      email: request.body.email,
-      password: request.body.password,
-    };
-    bcrypt.hash(newUser.password, 3, async function(err, encrypted){
+  const { firstName, lastName, email, password } = request.body;
 
-      let userCreated = await User.create({
-        firstName: newUser.firstName,
-        lastName: newUser.lastName,
-        email: newUser.email,
-        password: encrypted
-      });
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-      if (userCreated) {
-        //response.rediect("/login")
-        response.send("A new user has been created");
-      }
-    })
-  } catch (e) {
-    //response.rediect("/signup")
-    console.log(e)
+  const userCredential = {
+    firstName,
+    lastName,
+    email,
+    password: hashedPassword
   }
-}
-// will need passport configuration to complete login action
+
+  try {
+    const alreadyExistUser = await User.findOne({ where: { email }});
+    if (alreadyExistUser)
+      return response.status(409).send('Email already exist');
+
+    const createdUser = await User.create(userCredential);
+
+    const user = {
+      id: createdUser.id,
+      email: createdUser.email
+    }
+
+    console.log('signup user: ', user);
+    request.login(user, (error) => {
+      console.log('this is th bug: ', error.message)
+      if (error) return next(error);
+      console.log('successfully register');
+      response.redirect('/');
+    });
+  } catch(error) {
+    console.log('this is th bug: ', error.message)
+    console.error(error);
+  }
+};
+
+const postLogin = (request, response, next) => {
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureMessage: true
+  });
+  console.log('successfully logged in');
+};
+
 const postLogout = async (request, response, next) => {
-  try {
-    // req.logOut(function (err) {
-    //   if (err) {
-    //     return next(err);
-    //   }
-    //response.redirect("/login");
-  } catch (e) {
-    console.log(e)
-  }
-}
+  request.logout((error) => {
+    if (error) return next(error);
+    console.log('successfully logged out');
+    response.redirect('/');
+  });
+};
 
 module.exports = {
   getUsers,
   getUserById,
   updateUser,
   deleteUser,
-  getLogin,
   postLogin,
-  getSignup,
   postSignup,
   postLogout
-}
-
+};

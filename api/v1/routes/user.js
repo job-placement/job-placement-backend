@@ -1,8 +1,7 @@
-const express = require("express")
-const router = express.Router()
-const { body } = require('express-validator')
-const User = require('../models/User')
-const usersController = require('../controllers/usersController')
+const express = require("express");
+const router = express.Router();
+const { body } = require('express-validator');
+const usersController = require('../controllers/usersController');
 
 /*
 TODO: apply DRY principle to redundant endpoint addresses
@@ -13,23 +12,18 @@ router.route('/login')
 
 */
 
-router.get('/users', usersController.getUsers)
+router.get('/users', usersController.getUsers);
 
-router.get('/users/:userId', usersController.getUserById)
+router.get('/users/:userId', usersController.getUserById);
 
-router.put('/users/:userId', usersController.updateUser)
+router.put('/users/:userId', usersController.updateUser);
 
-router.delete('/users/:userId', usersController.deleteUser)
+router.delete('/users/:userId', usersController.deleteUser);
 
-router.get('/login', usersController.getLogin)
+router.post('/signup', usersController.postSignup);
 
-router.post('/login', usersController.postLogin)
+router.post('/login', usersController.postLogin);
 
-router.get('/signup', usersController.getSignup)
+router.post('/logout', usersController.postLogout);
 
-router.post('/signup', usersController.postSignup)
-
-router.post('/logout', usersController.postLogout)
-
-
-module.exports = router
+module.exports = router;
