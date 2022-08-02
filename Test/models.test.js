@@ -154,7 +154,7 @@ describe.only('Database, Sequelize and Models', () => {
 
       expect(disney.Skills).toHaveLength(3);
       expect(homeDepot.Skills).toHaveLength(3);
-      
+
       expect(disneySkills).toContain('Swift');
       expect(disneySkills).toContain('Golang');
       expect(homeDepotSkills).toContain('Angular');

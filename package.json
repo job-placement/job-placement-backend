@@ -24,10 +24,15 @@
   "homepage": "https://github.com/cesarsnina/placement-backend#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.17.3",
+    "express-session": "^1.17.3",
     "express-validator": "^6.14.1",
+    "helmet": "^5.1.0",
     "nodemon": "^2.0.16",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.19.0"

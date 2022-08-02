@@ -1,6 +1,10 @@
 const { response } = require('express');
 const express = require('express');
-const cors = require('cors')
+const session = require('express-session');
+const helmet = require('helmet');
+const cors = require('cors');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
 
 const path = require('path');
 
@@ -9,22 +13,26 @@ const PORT = 3005;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(helmet());
+app.use(cors());
+app.use(cookieParser());
 app.use(express.static('public'));
 
-app.use(cors());
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
-// app.use('/api', require('./server/api'));
+const userRoutes = require('../api/v1/routes/user');
+const jobRoutes = require('../api/v1/routes/job');
+// const authRouter = requeire('../api/v1/routes/auth');
 
-// app.get('/', (req, res) => {
-//     res.send('Amazing app to find jobs');
-// });
-
-
-const userRoutes = require('../api/v1/routes/user')
-const jobRoutes = require('../api/v1/routes/job')
-
-app.use(userRoutes)
-app.use(jobRoutes)
+app.use(userRoutes);
+app.use(jobRoutes);
+// app.use(authRouter);
 
 
 /* Error handling redirects

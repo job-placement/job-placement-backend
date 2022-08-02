@@ -1,7 +1,4 @@
-// const { db, DataTypes, Model } = require('../../../server/db');
-const { db } = require('../../../server/db');
-const { Sequelize, DataTypes, Model } = require('sequelize');
-
+const { db, DataTypes, Model } = require('../../../server/db');
 
 class User extends Model {};
 
@@ -11,14 +8,14 @@ User.init({
     autoIncrement: true,
     primaryKey: true
   },
-	firstName: { 
+	firstName: {
 		type: DataTypes.STRING,
 		allowNull: false,
 		validate: {
 			notEmpty: true
 		}
 	},
-	lastName: { 
+	lastName: {
 		type: DataTypes.STRING,
 		allowNull: false,
 		validate: {
