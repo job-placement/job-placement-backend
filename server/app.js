@@ -28,11 +28,16 @@ app.use(passport.session());
 
 const userRoutes = require('../api/v1/routes/user');
 const jobRoutes = require('../api/v1/routes/job');
-// const authRouter = requeire('../api/v1/routes/auth');
+
+const userRoutes = require('../api/v1/routes/user');
+const jobRoutes = require('../api/v1/routes/job');
+const jobSkillRoutes = require('../api/v1/routes/jobSkill');
+const skillRoutes = require('../api/v1/routes/skill');
 
 app.use(userRoutes);
 app.use(jobRoutes);
-// app.use(authRouter);
+app.use(jobSkillRoutes);
+app.use(skillRoutes);
 
 
 /* Error handling redirects

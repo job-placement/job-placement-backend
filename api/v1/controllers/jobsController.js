@@ -6,28 +6,86 @@ CRUD actions
 
 const { Job } = require('../models/index')
 const { User } = require('../models/index')
+const { Skill } = require('../models/index')
 
 
 
 const getJobs = async (request, response, next) => {
   try {
-    const jobs = await Job.findAll()
+    const jobs = await Job.findAll({
+      include: Skill
+    })
     response.json(jobs)
   } catch (e) {
     console.log(e)
   }
 }
 
+const getJobById = async (request, response, next) => {
+  try {
+    const job = await Job.findAll({
+      where: {
+        id: request.params.jobId
+      },
+      include: Skill
+    })
+    response.json(job)
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+const getJobByUser = async (request, response, next) => {
+  try {
+    const user = await User.findByPk(request.params.userId)
+    const job = await Job.findAll({
+      where: {
+        id: request.params.jobId
+      },
+      include: Skill
+    })
+    response.json({user: user, job: job})
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+
 const createJob = async (request, response, next) => {
   try {
+
     /* 
     TODO: create global currentUser
           determine if PK is available in POSTMAN
           if not then find user by JWT?
+    
+          create new Skill instance and include to new Job instance
+          const amidala = await User.create({ username: 'p4dm3', points: 1000 });
+          const queen = await Profile.create({ name: 'Queen' });
+          await amidala.addProfile(queen, { through: { selfGranted: false } });
+          const result = await User.findOne({
+            where: { username: 'p4dm3' },
+            include: Profile
+          });
+          console.log(result);
     */
-    const user = await User.findByPK(request.body.userId)
+    
+    const user = await User.findByPk(request.params.userId)
+    
+    // const newJobData = {
+    //   company: request.body.company,
+    //   logo: request.body.company,
+    //   new: true,
+    //   featued: false,
+    //   position: request.body.position,
+    //   role: request.body.role,
+    //   level: request.body.level,
+    //   postedAt: request.body.postedAt,
+    //   contract: request.body.contract,
+    //   location: request.body.location,
+    // }
 
-    const newJobData = {
+    const newJob = await Job.create({
       company: request.body.company,
       logo: request.body.company,
       new: true,
@@ -38,10 +96,21 @@ const createJob = async (request, response, next) => {
       postedAt: request.body.postedAt,
       contract: request.body.contract,
       location: request.body.location,
-      UserId: user.id
+      UserId: request.params.userId
     }
+    )
+    
 
-    await Job.create(newJobData)
+    // const result = await User.findAll( {
+    //   where: {
+    //     id: request.params.userId
+    //   },
+    //   include: Job
+    // })
+
+    // console.log(result)
+
+    response.json(newJob)
 
   } catch (e) {
     console.log(e)
@@ -51,8 +120,8 @@ const createJob = async (request, response, next) => {
 const editJob = async (request, response, next) => {
   try {
     
-    const user = await User.findByPK(request.body.userId)
-    const job = await Job.findByPK(request.body.jobId) //request.params.jobId ??
+    const user = await User.findByPk(request.params.userId)
+    const job = await Job.findByPk(request.params.jobId) //request.params.jobId ??
 
     job.set({
       company: request.body.company,
@@ -68,7 +137,7 @@ const editJob = async (request, response, next) => {
     })
 
     await job.save()
-
+    response.json(job)
   } catch (e) {
     console.log(e)
   }
@@ -77,6 +146,12 @@ const editJob = async (request, response, next) => {
 
 const deleteJob = async (request, response, next) => {
   try {
+    const jobToDelete = await Job.destroy({ where: { id: request.params.jobId }})
+    if(!!jobToDelete){
+       response.send('job deleted')
+    }
+   
+
   } catch (e) {
     console.log(e)
   }
@@ -85,5 +160,9 @@ const deleteJob = async (request, response, next) => {
 
 module.exports = {
   getJobs,
-  createJob
+  getJobByUser,
+  createJob,
+  editJob,
+  deleteJob,
+  getJobById
 }
