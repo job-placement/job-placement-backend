@@ -4,7 +4,7 @@ const pkg = require('../package.json');
 
 // creates an instance of database called by the apps name
 const db = new Sequelize(
-  process.env.DATABASE_DEV_URL || `postgres://postgres:postgres@localhost:5432/${pkg.name}`,
+  process.env.DATABASE_URL || `postgres://postgres:postgres@localhost:5432/${pkg.name}`,
   {
     logging: false
   }
