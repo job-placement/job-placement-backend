@@ -4,9 +4,11 @@ CRUD actions
 
 */
 
+
 const { Job } = require('../models/index')
 const { User } = require('../models/index')
 const { Skill } = require('../models/index')
+const { JobSkill} = require('../models/index')
 
 
 
@@ -70,21 +72,7 @@ const createJob = async (request, response, next) => {
           console.log(result);
     */
     
-    const user = await User.findByPk(request.params.userId)
-    
-    // const newJobData = {
-    //   company: request.body.company,
-    //   logo: request.body.company,
-    //   new: true,
-    //   featued: false,
-    //   position: request.body.position,
-    //   role: request.body.role,
-    //   level: request.body.level,
-    //   postedAt: request.body.postedAt,
-    //   contract: request.body.contract,
-    //   location: request.body.location,
-    // }
-
+    const user = await User.findByPk(request.params.userId)    
     const newJob = await Job.create({
       company: request.body.company,
       logo: request.body.company,
@@ -97,8 +85,20 @@ const createJob = async (request, response, next) => {
       contract: request.body.contract,
       location: request.body.location,
       UserId: request.params.userId
-    }
-    )
+    });
+    
+    
+    // const newSkills = await Skill.findAll({raw: true});
+    // for (let i = 0; i < newSkills.length; i++) { 
+    //   if (request.body.skills.includes(newSkills[i].name)) {
+    //     const createSkill = await JobSkill.create({
+    //       JobId: request.body.id,
+    //       SkillId: newSkills[i].id
+    //     });
+    //     await createSkill.save()
+    //     console.log("newJob.id", newJob.id, createSkill)
+    //   }
+    // }
     
 
     // const result = await User.findAll( {
