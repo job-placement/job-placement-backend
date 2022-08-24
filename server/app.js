@@ -1,4 +1,4 @@
-const { response } = require('express');
+require('dotenv').config()
 const express = require('express');
 const session = require('express-session');
 const helmet = require('helmet');
@@ -6,10 +6,9 @@ const cors = require('cors');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 
-const path = require('path');
 
 const app = express();
-const PORT = 3005;
+const PORT = process.env.PORT || 3005;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
