@@ -33,6 +33,7 @@ app.use(
 		saveUninitialized: false,
 	})
 );
+sessionStore.sync();
 
 app.use(passport.initialize());
 app.use(passport.session());
