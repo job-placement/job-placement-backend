@@ -84,39 +84,32 @@ const postSignup = async (request, response, next) => {
       return response.status(409).send('Email already exist');
 
     const createdUser = await User.create(userCredential);
-
     const user = {
       id: createdUser.id,
       email: createdUser.email
     }
 
-    console.log('signup user: ', user);
     request.login(user, (error) => {
-      console.log('this is th bug: ', error.message)
       if (error) return next(error);
-      console.log('successfully register');
-      response.redirect('/');
+      // Location 1: redirect
+      console.log('Successfully signed up!')
+      response.status(201).send('Successfully signed up, please redirect to the homepage');
     });
   } catch(error) {
-    console.log('this is th bug: ', error.message)
     console.error(error);
   }
 };
 
 const postLogin = (request, response, next) => {
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureMessage: true
-  });
-  console.log('successfully logged in');
+  passport.authenticate('local')(request, response, next);
 };
 
 const postLogout = async (request, response, next) => {
   request.logout((error) => {
     if (error) return next(error);
-    console.log('successfully logged out');
-    response.redirect('/');
+    // Location 3: redirect
+    console.log('Successfully logged out!');
+    response.send('Successfully logged out, please redirect to the homepage');
   });
 };
 
