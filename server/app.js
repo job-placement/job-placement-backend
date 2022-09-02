@@ -1,4 +1,4 @@
-require('dotenv').config()
+// require('dotenv').config()
 const express = require('express');
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
@@ -52,6 +52,11 @@ app.get('/500', errorController.get500Page)
 app.use(errorController.get404Page)
 
 */
+
+app.use((error, req, res, next) => {
+  console.error(error.stack)
+  res.status(500).send(error.message);
+});
 
 app.listen(PORT, function() {
 	console.log(`Listening to port: ${PORT}`);

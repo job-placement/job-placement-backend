@@ -89,11 +89,12 @@ const postSignup = async (request, response, next) => {
       email: createdUser.email
     }
 
+    // log in a user after signed up is successful
     request.login(user, (error) => {
       if (error) return next(error);
       // Location 1: redirect
-      console.log('Successfully signed up!')
-      response.status(201).send('Successfully signed up, please redirect to the homepage');
+      console.log('Successfully signed up!');
+      return response.status(201).json(user);
     });
   } catch(error) {
     console.error(error);
@@ -101,14 +102,21 @@ const postSignup = async (request, response, next) => {
 };
 
 const postLogin = (request, response, next) => {
-  passport.authenticate('local')(request, response, next);
+  passport.authenticate('local', (error, user, info)=> {
+    if (error) return next(error);
+    if (info) return response.status(401).json(info.message);
+    // function used to log in a user
+    request.logIn(user, error => {
+      if (error) return next(error);
+      return response.status(200).json(user);
+    });
+  })(request, response, next);
 };
 
 const postLogout = async (request, response, next) => {
   request.logout((error) => {
     if (error) return next(error);
     // Location 3: redirect
-    console.log('Successfully logged out!');
     response.send('Successfully logged out, please redirect to the homepage');
   });
 };
