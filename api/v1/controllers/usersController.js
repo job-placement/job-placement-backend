@@ -77,8 +77,10 @@ const postSignup = async (request, response, next) => {
   }
   try {
     const alreadyExistUser = await User.findOne({ where: { email }});
-    if (alreadyExistUser)
+    if (alreadyExistUser) {
+      console.log('Email already exist!');
       return response.status(409).send('Email already exist');
+    }
     const createdUser = await User.create(userCredential);
     const user = {
       id: createdUser.id,
