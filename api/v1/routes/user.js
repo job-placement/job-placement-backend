@@ -14,15 +14,25 @@ router.route('/login')
 
 router.get('/users', usersController.getUsers);
 
-router.get('/users/:userId', usersController.getUserById);
+router.get('/users/:userId',
+     usersController.ensureAuthenticated,
+     usersController.getUserById);
 
-router.put('/users/:userId', usersController.updateUser);
+router.put('/users/:userId',
+     usersController.ensureAuthenticated,
+     usersController.updateUser);
 
-router.delete('/users/:userId', usersController.deleteUser);
+router.delete('/users/:userId',
+     usersController.ensureAuthenticated,
+     usersController.deleteUser);
 
-router.post('/signup', usersController.postSignup);
+router.post('/signup',
+     usersController.fowardAuthenticated,
+     usersController.postSignup);
 
-router.post('/login', usersController.postLogin);
+router.post('/login',
+     usersController.fowardAuthenticated,
+     usersController.postLogin);
 
 router.post('/logout', usersController.postLogout);
 
