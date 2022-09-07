@@ -46,4 +46,4 @@ User.init({
 	timestamps: false,
 });
 
-module.exports = { User };
+module.exports = { User }; 
