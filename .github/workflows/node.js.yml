@@ -30,6 +30,9 @@ jobs:
     - name: Seed Database
       run: npm run seed
 
+  env: 
+    POSTGRES_PASSWORD: secret
+
   test:
     name: Test
     runs-on: ubuntu-latest
@@ -37,10 +40,9 @@ jobs:
     services:
 
       postgres:
-        image: postgres:14
+        image: postgres:latest
         env:
-          POSTGRES_USER: ${{ env.PG_USER }}
-          POSTGRES_PASSWORD: ${{ env.PG_PW }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
           POSTGRES_DB: placement
         ports: 
           - 5432:5432
