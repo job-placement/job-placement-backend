@@ -42,7 +42,7 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD}}
+          POSTGRES_PASSWORD: secret
           POSTGRES_DB: placement
         ports: 
           - 5432:5432
