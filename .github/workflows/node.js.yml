@@ -67,7 +67,7 @@ jobs:
       run: npm run seed
 
     - name: Run migrations
-      run: npm start
+      run: npm start & sleep 10
 
     - name: Pre Prod Test Suite
       run: npm test
