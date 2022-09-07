@@ -1,6 +1,9 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
+env: 
+  POSTGRES_PASSWORD: secret
+
 name: Jobs Placemen API Actions
 
 on:
@@ -30,17 +33,16 @@ jobs:
     - name: Seed Database
       run: npm run seed
 
-
-
   test:
     name: Test
     runs-on: ubuntu-latest
 
     services:
+
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_PASSWORD: ${{ env.PG_PW }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD}}
           POSTGRES_DB: placement
         ports: 
           - 5432:5432
