@@ -92,7 +92,7 @@ describe('All json file should have data', () => {
 
   describe('Application.json', () => {
     test('should have a length of 18', async () => {
-      expect(applications).toHaveLength(17);
+      expect(applications).toHaveLength(18);
     });
     test('should have the following property', () => {
       expect(applications[0]).toHaveProperty('JobId');
