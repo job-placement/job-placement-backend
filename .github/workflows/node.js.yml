@@ -33,8 +33,32 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    
+
+    services:
+
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: secret
+          POSTGRES_DB: placement
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps: 
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        
+    - name: Run migrations
+      run: make migrateup
+
     - name: Pre Prod Test Suite
       run: npm test
 
