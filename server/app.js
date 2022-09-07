@@ -1,6 +1,6 @@
-// if (process.env.NODE_ENV !== 'production') {
-// 	require('dotenv').config();
-// }
+if (process.env.NODE_ENV !== 'production') {
+	require('dotenv').config();
+}
 
 const express = require('express');
 const session = require('express-session');
@@ -13,7 +13,7 @@ const cors = require('cors');
 const passport = require('passport');
 
 const app = express();
-const PORT = 3005;
+const PORT = process.env.PORT || 3005;
 const userRoutes = require('../api/v1/routes/user');
 const jobRoutes = require('../api/v1/routes/job');
 const jobSkillRoutes = require('../api/v1/routes/jobSkill');
