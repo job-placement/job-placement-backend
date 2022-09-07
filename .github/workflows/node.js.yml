@@ -55,9 +55,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        
+
     - name: Run migrations
-      run: make migrateup
+      run: npm start
 
     - name: Pre Prod Test Suite
       run: npm test
