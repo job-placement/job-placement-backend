@@ -13,6 +13,10 @@ on:
       - main
       - staging
 
+  env: 
+    POSTGRES_PASSWORD: secret
+
+
 jobs:
   build:
     name: Build
@@ -30,8 +34,6 @@ jobs:
     - name: Seed Database
       run: npm run seed
 
-  env: 
-    POSTGRES_PASSWORD: secret
 
   test:
     name: Test
