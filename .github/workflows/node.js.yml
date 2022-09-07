@@ -37,12 +37,10 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      env: 
-       POSTGRES_PASSWORD: secret
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_PASSWORD: ${{ env.PG_PW }}
           POSTGRES_DB: placement
         ports: 
           - 5432:5432
