@@ -32,7 +32,8 @@ jobs:
 
   test:
     name: Test
-
+    runs-on: ubuntu-latest
+    
     steps: 
     - name: Pre Prod Test Suite
       run: npm test
