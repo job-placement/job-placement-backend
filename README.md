@@ -8,3 +8,6 @@ npm run test
 
 ## populate app with data
 npm run seed
+
+#### Information
+The front-end and back-end are on different repo.
