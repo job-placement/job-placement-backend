@@ -11,3 +11,4 @@ npm run seed
 
 #### Information
 The front-end and back-end are on different repo.
+Information for developers only will be in developers.md
