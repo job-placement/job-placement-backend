@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-const { db } = require('./db');
+const { db } = require('../api/v1/models');
 const sessionStore = new SequelizeStore({ db });
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
