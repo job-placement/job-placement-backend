@@ -14,7 +14,8 @@
   "scripts": {
     "test": "node server/seed & jest --detectOpenHandles",
     "seed": "node server/seed",
-    "start": "nodemon server/app.js"
+    "start": "node server/app.js",
+    "server": "nodemon server/app.js"
   },
   "repository": {
     "type": "git",
