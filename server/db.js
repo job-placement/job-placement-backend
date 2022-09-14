@@ -28,8 +28,6 @@ process.env.NODE_ENV === 'production' ?
 const db = new Sequelize(
   process.env.DATABASE_URL || `postgres://postgres:postgres@localhost:5432/${pkg.name}`,
   {
-		dialect: 'postgres',
-		protocol: 'postgres',
     logging: false,
     dialectOptions: dialect
   }
