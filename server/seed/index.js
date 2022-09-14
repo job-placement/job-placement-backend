@@ -84,7 +84,7 @@ const seed = async () => {
 		// Job, Skill, and User table must be created before these table
 		const applicationPromises = applications.map(application => Application.create(application));
 		const jobSkillPromises = jobSkills.map(jobSkill => JobSkill.create(jobSkill));
-	
+
 		const application = await Promise.all(applicationPromises);
 		const jobSkill = await Promise.all(jobSkillPromises);
 
