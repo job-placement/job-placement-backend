@@ -1,7 +1,8 @@
 if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config();
 }
-
+const { seed } = require('./seed');
+seed();
 const express = require('express');
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
