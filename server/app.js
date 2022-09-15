@@ -1,8 +1,3 @@
-if (process.env.NODE_ENV !== 'production') {
-	require('dotenv').config();
-}
-const { seed } = require('./seed');
-seed();
 const express = require('express');
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
@@ -21,6 +16,10 @@ const jobSkillRoutes = require('../api/v1/routes/jobSkill');
 const skillRoutes = require('../api/v1/routes/skill');
 
 require('../api/v1/controllers/passportController')(passport);
+
+if (process.env.NODE_ENV !== 'production') {
+	require('dotenv').config();
+}
 
 app.use(helmet());
 app.use(express.json());
