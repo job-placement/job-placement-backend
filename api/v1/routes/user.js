@@ -2,13 +2,13 @@ const router = require("express").Router();
 const { body } = require('express-validator');
 const {
 				getUsers, getUserById, updateUser,
-				deleteUser, postLogin, postSignup,
+				deleteUser, postSignup, postLogin,
 				postLogout, ensureAuthenticated,
 				fowardAuthenticated
 			} = require('../controllers/usersController');
 
 router.route('/users')
-	.get(getUsers);
+	.get(ensureAuthenticated, getUsers);
 
 router.route('/users/:userId')
 	.get(ensureAuthenticated, getUserById)

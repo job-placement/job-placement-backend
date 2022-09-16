@@ -1,20 +1,25 @@
-const express = require("express")
-const router = express.Router()
-const { body } = require('express-validator')
-const Job = require('../models/Job')
-const jobsController = require('../controllers/jobsController')
+const router = require("express").Router();
+const { body } = require('express-validator');
+const { getJobs, getJobById, createJob,
+        getJobByUser, editJob, deleteJob
+      } = require('../controllers/jobsController');
+const { ensureAuthenticated
+      } = require('../controllers/usersController');
 
+router.route('/jobs')
+	.get(getJobs);
 
-/*
+router.route('/jobs/:jobId')
+  .get(ensureAuthenticated, getJobById);
 
-TODO: finish building remaining endpoints to support CRUD actions
+router.route('/users/:userId/create-job')
+  .post(ensureAuthenticated, createJob);
 
-*/
-router.post('/users/:userId/create-job', jobsController.createJob)
-router.get('/jobs', jobsController.getJobs)
-router.get('/jobs/:jobId', jobsController.getJobById)
-router.get('/users/:userId/jobs/:jobId', jobsController.getJobByUser)
-router.put('/users/:userId/jobs/:jobId', jobsController.editJob)
-router.delete('/users/:userId/jobs/:jobId/delete', jobsController.deleteJob)
+router.route('/users/:userId/jobs/:jobId')
+  .get(ensureAuthenticated, getJobByUser)
+  .put(ensureAuthenticated, editJob);
 
-module.exports = router
+router.delete('/users/:userId/jobs/:jobId/delete')
+  .delete(ensureAuthenticated, deleteJob);
+
+module.exports = router;
