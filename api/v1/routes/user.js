@@ -1,39 +1,27 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
 const { body } = require('express-validator');
-const usersController = require('../controllers/usersController');
+const {
+				getUsers, getUserById, updateUser,
+				deleteUser, postLogin, postSignup,
+				postLogout, ensureAuthenticated,
+				fowardAuthenticated
+			} = require('../controllers/usersController');
 
-/*
-TODO: apply DRY principle to redundant endpoint addresses
+router.route('/users')
+	.get(getUsers);
+
+router.route('/users/:userId')
+	.get(ensureAuthenticated, getUserById)
+	.put(ensureAuthenticated, updateUser)
+	.delete(ensureAuthenticated, deleteUser);
+
+router.route('/signup')
+	.post(fowardAuthenticated, postSignup);
 
 router.route('/login')
-     .get(usersController.getLogin)
-     .post(usersController.postLogin)
+	.post(fowardAuthenticated, postLogin);
 
-*/
-
-router.get('/users', usersController.getUsers);
-
-router.get('/users/:userId',
-     usersController.ensureAuthenticated,
-     usersController.getUserById);
-
-router.put('/users/:userId',
-     usersController.ensureAuthenticated,
-     usersController.updateUser);
-
-router.delete('/users/:userId',
-     usersController.ensureAuthenticated,
-     usersController.deleteUser);
-
-router.post('/signup',
-     usersController.fowardAuthenticated,
-     usersController.postSignup);
-
-router.post('/login',
-     usersController.fowardAuthenticated,
-     usersController.postLogin);
-
-router.post('/logout', usersController.postLogout);
+router.route('/logout')
+	.post(ensureAuthenticated, postLogout);
 
 module.exports = router;
