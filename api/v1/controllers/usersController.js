@@ -1,67 +1,56 @@
-/*
-
-CRUD actions
-
-*/
-
-const { User, Job } = require('../models/index');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
-const getUsers = async (request, response, next) => {
+const { User, Job } = require('../models');
+
+const getUsers = async (request, response) => {
   try {
-    const users = await User.findAll({
-      include:Job
-    })
-    response.json(users)
-  } catch (e) {
-    console.log(e)
+    const users = await User.findAll({ include:Job });
+    response.json(users);
+  } catch (error) {
+    console.error(error);
   }
 };
 
-const getUserById = async (request, response, next) => {
+const getUserById = async (request, response) => {
   try {
-    const userId = request.params.userId
-    const user = await User.findAll({
-      where:  {
-        id: userId
-      },
+    const userId = request.params.userId;
+    const user = await User.findByPk(userId, {
       include: Job
-    })
-    response.json(user)
-  } catch (e) {
-    console.log(e)
-  }
-};
-
-const updateUser = async (request, response, next) => {
-  try {
-    const userToUpdate = await User.findByPk(request.params.userId);
-    bcrypt.hash(request.body.password, 3, async function(err, encrypted){
-    const updatedUser = await userToUpdate.update({
-      firstName: request.body.firstName,
-      lastName: request.body.lastName,
-      email: request.body.email,
-      password:encrypted
     });
-      if(updateUser){
-        response.status(201).send("user has been updated");
-      }
-    })
-} catch (e) {
-    console.log(e)
+    response.json(user);
+  } catch (error) {
+    console.error(error);
   }
 };
 
-const deleteUser = async (request, response, next) => {
+const updateUser = async (request, response) => {
   try {
-    const userToDelete = await User.findByPk(request.params.id);
-    const userDeteleted = await userToDelete.destroy()
-    if(userDeteleted){
-      response.status(201).send("user has been deleted");
-    }
-  } catch (e) {
-    console.log(e)
+    const userId = request.params.userId;
+    const userToUpdate = await User.findByPk(userId);
+    const { firstName, lastName, email, password } = request.body;
+    const saltRounds = 10;
+    const encrypted = await bcrypt.hash(password, saltRounds);
+    const updatedUser = await userToUpdate.update({
+      firstName: firstName || userToUpdate.firstName,
+      lastName: lastName || userToUpdate.lastName,
+      email: email || userToUpdate.email,
+      password: encrypted || userToUpdate.password
+    });
+    response.json(updatedUser);
+} catch (error) {
+    console.error(error);
+  }
+};
+
+const deleteUser = async (request, response) => {
+  try {
+    const userId = request.params.userId;
+    const userToDelete = await User.findByPk(userId);
+    await userToDelete.destroy();
+    response.json(userToDelete);
+  } catch (error) {
+    console.error(error)
   }
 };
 
@@ -78,7 +67,6 @@ const postSignup = async (request, response, next) => {
   try {
     const alreadyExistUser = await User.findOne({ where: { email }});
     if (alreadyExistUser) {
-      console.log('Email already exist!');
       return response.status(409).send('Email already exist');
     }
     const createdUser = await User.create(userCredential);
@@ -89,9 +77,8 @@ const postSignup = async (request, response, next) => {
     // log in a user after signed up is successful
     request.login(user, (error) => {
       if (error) return next(error);
-      // Location 1: redirect to the homepage
       console.log('Successfully signed up!');
-      return response.status(201).json(user);
+      return response.json(user);
     });
   } catch(error) {
     console.error(error);
@@ -105,39 +92,33 @@ const postLogin = (request, response, next) => {
     // function used to log in a user
     request.logIn(user, error => {
       if (error) return next(error);
-      // Location 2: redirect to the homepage
       console.log('Successfully logged in!');
-      return response.status(200).json(user);
+      return response.json(user);
     });
   })(request, response, next);
 };
 
 const postLogout = async (request, response, next) => {
+  const user = request.user;
   request.logout((error) => {
     if (error) return next(error);
-    // Location 3: redirect to homepage or login
     console.log('Successfully logged out!');
-    // send a string but ideally the user
-    response.status(200).send('Successfully logged out');
+    return response.json(user);
   });
 };
 
 // only allow logged in user to proceed
 const ensureAuthenticated = (request, response, next) => {
   if (request.isAuthenticated()) return next();
-  // Location 4: redirect to login page
-  console.log('Access denied, you must log in to proceed');
-  response.status(401).send('Please log in');
+  return response.status(401).send('Please log in to proceed');
 }
 
-// prevent logged in user to visit login and signup page
+// prevent logged in user to visit /login and /signup page
 const fowardAuthenticated = (request, response, next) => {
   if (!request.isAuthenticated()) {
     return next();
   }
-  // Location 5: redirect to  homepage
-  console.log('Access denied, you are already logged in')
-  response.status(301).send('You are already logged in');
+  return response.status(301).send('You are already logged in');
 }
 
 module.exports = {
