@@ -40,7 +40,11 @@ User.init({
 	image: DataTypes.STRING,
 	resume: DataTypes.STRING,
 	bio: DataTypes.STRING,
-	experience: DataTypes.INTEGER
+	experience: DataTypes.INTEGER,
+	admin: {
+		type: DataTypes.BOOLEAN,
+		defaultValue: false
+	}
 }, {
 	sequelize: db,
 	timestamps: false,
