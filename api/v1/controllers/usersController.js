@@ -1,11 +1,17 @@
 const bcrypt = require('bcrypt');
+const { response } = require('express');
+const { request } = require('http');
 const passport = require('passport');
 
-const { User, Job } = require('../models');
+const { User, Job, Skill } = require('../models');
 
 const getUsers = async (request, response) => {
   try {
-    const users = await User.findAll({ include:Job });
+    const users = await User.findAll({
+      include: [
+        { model: Job, include: Skill }
+      ]
+    });
     response.json(users);
   } catch (error) {
     console.error(error);
@@ -14,7 +20,7 @@ const getUsers = async (request, response) => {
 
 const getUserById = async (request, response) => {
   try {
-    const userId = request.params.userId;
+    const userId = request.user.id;
     const user = await User.findByPk(userId, {
       include: Job
     });
@@ -26,7 +32,7 @@ const getUserById = async (request, response) => {
 
 const updateUser = async (request, response) => {
   try {
-    const userId = request.params.userId;
+    const userId = request.user.id;
     const userToUpdate = await User.findByPk(userId);
     const { firstName, lastName, email, password } = request.body;
     const saltRounds = 10;
@@ -45,7 +51,7 @@ const updateUser = async (request, response) => {
 
 const deleteUser = async (request, response) => {
   try {
-    const userId = request.params.userId;
+    const userId = request.user.id;
     const userToDelete = await User.findByPk(userId);
     await userToDelete.destroy();
     response.json(userToDelete);
@@ -107,20 +113,6 @@ const postLogout = async (request, response, next) => {
   });
 };
 
-// only allow logged in user to proceed
-const ensureAuthenticated = (request, response, next) => {
-  if (request.isAuthenticated()) return next();
-  return response.status(401).send('Please log in to proceed');
-}
-
-// prevent logged in user to visit /login and /signup page
-const fowardAuthenticated = (request, response, next) => {
-  if (!request.isAuthenticated()) {
-    return next();
-  }
-  return response.status(301).send('You are already logged in');
-}
-
 module.exports = {
   getUsers,
   getUserById,
@@ -129,6 +121,4 @@ module.exports = {
   postLogin,
   postSignup,
   postLogout,
-  ensureAuthenticated,
-  fowardAuthenticated
 };

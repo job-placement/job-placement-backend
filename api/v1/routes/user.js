@@ -1,27 +1,23 @@
 const router = require("express").Router();
 const { body } = require('express-validator');
-const {
-				getUsers, getUserById, updateUser,
-				deleteUser, postSignup, postLogin,
-				postLogout, ensureAuthenticated,
-				fowardAuthenticated
-			} = require('../controllers/usersController');
+const constroller = require('../controllers/usersController');
+const { checkIfLoggedIn, fowardLoggedInUser,
+				checkIfAdmin
+			} = require('../validations/userValidation');
 
 router.route('/users')
-	.get(ensureAuthenticated, getUsers);
-
-router.route('/users/:userId')
-	.get(ensureAuthenticated, getUserById)
-	.put(ensureAuthenticated, updateUser)
-	.delete(ensureAuthenticated, deleteUser);
+	.get(checkIfLoggedIn, checkIfAdmin, constroller.getUsers)
+	.get(checkIfLoggedIn, constroller.getUserById)
+	.put(checkIfLoggedIn, constroller.updateUser)
+	.delete(checkIfLoggedIn, constroller.deleteUser);
 
 router.route('/signup')
-	.post(fowardAuthenticated, postSignup);
+	.post(fowardLoggedInUser, constroller.postSignup);
 
 router.route('/login')
-	.post(fowardAuthenticated, postLogin);
+	.post(fowardLoggedInUser, constroller.postLogin);
 
 router.route('/logout')
-	.post(ensureAuthenticated, postLogout);
+	.post(checkIfLoggedIn, constroller.postLogout);
 
 module.exports = router;
