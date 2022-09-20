@@ -13,13 +13,3 @@ exports.checkIfAdmin = (request, response, next) => {
   if (request.user.admin) return next();
   return response.status(401).send('Only Admins are allowed');
 }
-
-exports.checkIfUserProfile = (request, response, next) => {
-  return next();
-  return response.send('Working on it');
-}
-
-exports.checkIfUserCreatedJob = (request, response, next) => {
-  return next();
-  return response.send('Working on it');
-}
