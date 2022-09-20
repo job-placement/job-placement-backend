@@ -1,6 +1,4 @@
 const bcrypt = require('bcrypt');
-const { response } = require('express');
-const { request } = require('http');
 const passport = require('passport');
 
 const { User, Job, Skill } = require('../models');
@@ -32,26 +30,32 @@ const getUserById = async (request, response) => {
 
 const updateUser = async (request, response) => {
   try {
-    const userId = request.user.id;
+    const userId = request.body.id || request.user.id;
     const userToUpdate = await User.findByPk(userId);
-    const { firstName, lastName, email, password } = request.body;
+    const { firstName, lastName, email, password,
+      image, resume, bio, experience
+    } = request.body;
     const saltRounds = 10;
     const encrypted = await bcrypt.hash(password, saltRounds);
     const updatedUser = await userToUpdate.update({
       firstName: firstName || userToUpdate.firstName,
       lastName: lastName || userToUpdate.lastName,
       email: email || userToUpdate.email,
-      password: encrypted || userToUpdate.password
+      password: encrypted || userToUpdate.password,
+      image: image || userToUpdate.image,
+      resume: resume || userToUpdate.resume,
+      bio: bio || userToUpdate.bio,
+      experience: experience || userToUpdate.experience
     });
     response.json(updatedUser);
-} catch (error) {
+  } catch (error) {
     console.error(error);
   }
 };
 
 const deleteUser = async (request, response) => {
   try {
-    const userId = request.user.id;
+    const userId = request.body.id || request.user.id;
     const userToDelete = await User.findByPk(userId);
     await userToDelete.destroy();
     response.json(userToDelete);
@@ -60,7 +64,7 @@ const deleteUser = async (request, response) => {
   }
 };
 
-const postSignup = async (request, response, next) => {
+const signup = async (request, response, next) => {
   const { firstName, lastName, email, password } = request.body;
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -91,7 +95,7 @@ const postSignup = async (request, response, next) => {
   }
 };
 
-const postLogin = (request, response, next) => {
+const login = (request, response, next) => {
   passport.authenticate('local', (error, user, info)=> {
     if (error) return next(error);
     if (info) return response.status(401).json(info.message);
@@ -104,7 +108,7 @@ const postLogin = (request, response, next) => {
   })(request, response, next);
 };
 
-const postLogout = async (request, response, next) => {
+const logout = async (request, response, next) => {
   const user = request.user;
   request.logout((error) => {
     if (error) return next(error);
@@ -118,7 +122,7 @@ module.exports = {
   getUserById,
   updateUser,
   deleteUser,
-  postLogin,
-  postSignup,
-  postLogout,
+  login,
+  signup,
+  logout,
 };

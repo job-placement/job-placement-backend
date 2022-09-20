@@ -1,9 +1,7 @@
 const router = require("express").Router();
-const { body } = require('express-validator');
 const constroller = require('../controllers/usersController');
-const { checkIfLoggedIn, fowardLoggedInUser,
-				checkIfAdmin
-			} = require('../validations/userValidation');
+const { fowardLoggedInUser, checkIfLoggedIn, checkIfAdmin
+} = require('../validations/userValidation');
 
 router.route('/users')
 	.get(checkIfLoggedIn, checkIfAdmin, constroller.getUsers)
@@ -12,12 +10,12 @@ router.route('/users')
 	.delete(checkIfLoggedIn, constroller.deleteUser);
 
 router.route('/signup')
-	.post(fowardLoggedInUser, constroller.postSignup);
+	.post(fowardLoggedInUser, constroller.signup);
 
 router.route('/login')
-	.post(fowardLoggedInUser, constroller.postLogin);
+	.post(fowardLoggedInUser, constroller.login);
 
 router.route('/logout')
-	.post(checkIfLoggedIn, constroller.postLogout);
+	.post(checkIfLoggedIn, constroller.logout);
 
 module.exports = router;
