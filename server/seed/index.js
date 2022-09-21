@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs').promises;
 const { Client } = require('pg');
+const bcrypt = require('bcrypt');
 
 const pkg = require('../../package.json');
 const { Job, Skill, User, Application, JobSkill, db } = require('../../api/v1/models');
@@ -71,7 +72,10 @@ const seed = async () => {
 
 		// loop through each json object and insert data into the table
 		const skillPromises = skills.map(skill => Skill.create(skill));
-		const userPromises = users.map(user => User.create(user));
+		const userPromises = users.map(async user => {
+			user.password = await bcrypt.hash(user.password, 10);
+			User.create(user);
+		});
 
 		// make sure all the promise are resolved
 		const skill = await Promise.all(skillPromises);

@@ -1,161 +1,124 @@
-/*
+const { Job, Skill, JobSkill } = require('../models');
 
-CRUD actions
-
-*/
-
-const { body } = require("express-validator");
-const { Job } = require("../models/index");
-const { User } = require("../models/index");
-const { Skill } = require("../models/index");
-const { JobSkill } = require("../models/index");
-
-const getJobs = async (request, response, next) => {
+const getJobs = async (request, response) => {
   try {
-    const jobs = await Job.findAll({
-      include: Skill,
-    });
+    const jobs = await Job.findAll({ include: Skill });
     response.json(jobs);
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.error(error);
   }
 };
 
-const getJobById = async (request, response, next) => {
+const getJobById = async (request, response) => {
   try {
-    const job = await Job.findAll({
-      where: {
-        id: request.params.jobId,
-      },
+    const { jobId } = request.params;
+    const job = await Job.findByPk(jobId, {
       include: Skill,
     });
     response.json(job);
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.error(error);
   }
 };
 
-const getJobByUser = async (request, response, next) => {
+const createJob = async (request, response) => {
   try {
-    const user = await User.findByPk(request.params.userId);
-    const job = await Job.findAll({
-      where: {
-        id: request.params.jobId,
-      },
-      include: Skill,
-    });
-    response.json({ user: user, job: job });
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-const createJob = async (request, response, next) => {
-  try {
-    /* 
-    TODO: create global currentUser
-          determine if PK is available in POSTMAN
-          if not then find user by JWT?
-    
-          create new Skill instance and include to new Job instance
-          const amidala = await User.create({ username: 'p4dm3', points: 1000 });
-          const queen = await Profile.create({ name: 'Queen' });
-          await amidala.addProfile(queen, { through: { selfGranted: false } });
-          const result = await User.findOne({
-            where: { username: 'p4dm3' },
-            include: Profile
-          });
-          console.log(result);
-    */
-
-    const user = await User.findByPk(request.params.userId);
+    const { company, logo, featured, position, role,
+      level, postedAt, contract, location, skills
+    }= request.body;
     const newJob = await Job.create({
-      company: request.body.company,
-      logo: request.body.logo,
+      company,
+      logo,
       new: request.body.new,
-      featued: request.body.featued,
-      position: request.body.position,
-      role: request.body.role,
-      level: request.body.level,
-      postedAt: request.body.postedAt,
-      contract: request.body.contract,
-      location: request.body.location,
-      UserId: request.params.userId,
+      featured,
+      position,
+      role,
+      level,
+      postedAt,
+      contract,
+      location,
+      UserId: request.user.id,
     });
-
-    const newSkills = await Skill.findAll({ raw: true });
-    for (let i = 0; i < newSkills.length; i++) {
-      if (request.body.skills.includes(newSkills[i].name)) {
-        const createSkill = await JobSkill.create({
+    const allSkills = await Skill.findAll();
+    for (let i = 0; i < allSkills.length; i++) {
+      if (skills.includes(allSkills[i].name)) {
+        await JobSkill.create({
           JobId: newJob.id,
-          SkillId: newSkills[i].id,
+          SkillId: allSkills[i].id,
         });
-        await createSkill.save();
       }
     }
-
-    response.json(newJob);
-  } catch (e) {
-    console.log(e);
+    const result = await Job.findByPk(newJob.id, {
+      include: Skill });
+    response.json(result);
+  } catch (error) {
+    console.error(error);
   }
 };
 
-const editJob = async (request, response, next) => {
+const editJob = async (request, response) => {
   try {
-    const user = await User.findByPk(request.params.userId);
-    const job = await Job.findByPk(request.params.jobId); //request.params.jobId ??
-
-    job.set({
-      company: request.body.company,
-      logo: request.body.logo,
-      new: request.body.new,
-      featued: request.body.featured,
-      position: request.body.position,
-      role: request.body.role,
-      level: request.body.level,
-      postedAt: request.body.postedAt,
-      contract: request.body.contract,
-      location: request.body.location,
+    const { company, logo, featured, position,
+      role, level, postedAt, contract, location
+    } = request.body;
+    const { id, admin } = request.user;
+    const { jobId } = request.params;
+    const job = await Job.findByPk(jobId, {
+      include: Skill
     });
-
-    const jobToDelete = await JobSkill.destroy({
-      where: { JobId: job.id, },
+    if (job.UserId !== id && !admin) {
+      return response.send('Only the creater can modify');
+    }
+    job.update({
+      company: company || job.company,
+      logo: logo || job.logo,
+      new: request.body.new || job.new,
+      featured: featured || job.featured,
+      position: position || job.position,
+      role: role || job.role,
+      level: level || job.level,
+      postedAt: postedAt || job.postedAt,
+      contract: contract || job.contract,
+      location: location || job.location,
     });
-
-    const newSkills = await Skill.findAll({ raw: true });
-    for (let i = 0; i < newSkills.length; i++) {
-      if (request.body.skills.includes(newSkills[i].name)) {
-        const createSkill = await JobSkill.create({
-          JobId: job.id,
-          SkillId: newSkills[i].id,
-        });
-        await createSkill.save();
+    if (request.body.skills) {
+      await JobSkill.destroy({ where: { JobId: jobId }});
+      const allSkills = await Skill.findAll();
+      for (let i = 0; i < allSkills.length; i++) {
+        if (request.body.skills.includes(allSkills[i].name)) {
+          await JobSkill.create({
+            JobId: job.id,
+            SkillId: allSkills[i].id,
+          });
+        }
       }
     }
-
-    await job.save();
-    response.json(job);
-  } catch (e) {
-    console.log(e);
+    const updatedJob = await Job.findByPk(jobId, {
+      include: Skill
+    });
+    response.json(updatedJob);
+  } catch (error) {
+    console.error(error);
   }
 };
 
-const deleteJob = async (request, response, next) => {
+const deleteJob = async (request, response) => {
   try {
-    const jobToDelete = await Job.destroy({
-      where: { id: request.params.jobId },
-    });
-    if (!!jobToDelete) {
-      response.send("job deleted");
+    const { jobId } = request.params
+    const { id, admin } = request.user;
+    const deletedJob = await Job.findByPk(jobId);
+    if (deletedJob.UserId !== id && !admin) {
+      return response.send('Only the creater can delete');
     }
-  } catch (e) {
-    console.log(e);
+    await deletedJob.destroy();
+    response.json(deletedJob);
+  } catch (error) {
+    console.log(error);
   }
 };
 
 module.exports = {
   getJobs,
-  getJobByUser,
   createJob,
   editJob,
   deleteJob,

@@ -8,7 +8,8 @@
 			"image": "HappyFace",
 			"resume": "HappyWorker",
 			"bio": "HappyPerson",
-			"experience": 1
+			"experience": 1,
+			"admin": false
 		},
 		{
 			"firstName": "Bruce",
@@ -18,7 +19,8 @@
 			"image": "HappyFace",
 			"resume": "HappyWorker",
 			"bio": "HappyPerson",
-			"experience": 1
+			"experience": 1,
+			"admin": true
 		},
 		{
 			"firstName": "Hiroyuki",
@@ -28,7 +30,8 @@
 			"image": "HappyFace",
 			"resume": "HappyWorker",
 			"bio": "HappyPerson",
-			"experience": 1
+			"experience": 1,
+			"admin": false
 		},
 		{
 			"firstName": "Michelle",
@@ -38,7 +41,8 @@
 			"image": "HappyFace",
 			"resume": "HappyWorker",
 			"bio": "HappyPerson",
-			"experience": 1
+			"experience": 1,
+			"admin": false
 		},
 		{
 			"firstName": "Morgan",
@@ -48,7 +52,8 @@
 			"image": "HappyFace",
 			"resume": "HappyWorker",
 			"bio": "HappyPerson",
-			"experience": 1
+			"experience": 1,
+			"admin": false
 		},
 		{
 			"firstName": "Ben",
@@ -58,7 +63,8 @@
 			"image": "HappyFace",
 			"resume": "HappyWorker",
 			"bio": "HappyPerson",
-			"experience": 1
+			"experience": 1,
+			"admin": false
 		},
 		{
 			"firstName": "Johnny",
@@ -68,7 +74,8 @@
 			"image": "HappyFace",
 			"resume": "HappyWorker",
 			"bio": "HappyPerson",
-			"experience": 1
+			"experience": 1,
+			"admin": false
 		},
 		{
 			"firstName": "Salma",
@@ -78,7 +85,8 @@
 			"image": "HappyFace",
 			"resume": "HappyWorker",
 			"bio": "HappyPerson",
-			"experience": 1
+			"experience": 1,
+			"admin": false
 		},
 		{
 			"firstName": "Idris",
@@ -88,7 +96,8 @@
 			"image": "HappyFace",
 			"resume": "HappyWorker",
 			"bio": "HappyPerson",
-			"experience": 1
+			"experience": 1,
+			"admin": false
 		},
 		{
 			"firstName": "Tyler",
@@ -98,7 +107,8 @@
 			"image": "HappyFace",
 			"resume": "HappyWorker",
 			"bio": "HappyPerson",
-			"experience": 1
+			"experience": 1,
+			"admin": false
 		}
 	]
 }

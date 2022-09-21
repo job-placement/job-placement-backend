@@ -1,39 +1,21 @@
-const express = require("express");
-const router = express.Router();
-const { body } = require('express-validator');
-const usersController = require('../controllers/usersController');
+const router = require('express').Router();
+const constroller = require('../controllers/usersController');
+const { fowardLoggedInUser, checkIfLoggedIn, checkIfAdmin
+	} = require('../validations/userValidation');
 
-/*
-TODO: apply DRY principle to redundant endpoint addresses
+router.route('/users')
+	.get(checkIfLoggedIn, checkIfAdmin, constroller.getUsers)
+	.get(checkIfLoggedIn, constroller.getUserById)
+	.put(checkIfLoggedIn, constroller.updateUser)
+	.delete(checkIfLoggedIn, constroller.deleteUser);
+
+router.route('/signup')
+	.post(fowardLoggedInUser, constroller.signup);
 
 router.route('/login')
-     .get(usersController.getLogin)
-     .post(usersController.postLogin)
+	.post(fowardLoggedInUser, constroller.login);
 
-*/
-
-router.get('/users', usersController.getUsers);
-
-router.get('/users/:userId',
-     usersController.ensureAuthenticated,
-     usersController.getUserById);
-
-router.put('/users/:userId',
-     usersController.ensureAuthenticated,
-     usersController.updateUser);
-
-router.delete('/users/:userId',
-     usersController.ensureAuthenticated,
-     usersController.deleteUser);
-
-router.post('/signup',
-     usersController.fowardAuthenticated,
-     usersController.postSignup);
-
-router.post('/login',
-     usersController.fowardAuthenticated,
-     usersController.postLogin);
-
-router.post('/logout', usersController.postLogout);
+router.route('/logout')
+	.post(checkIfLoggedIn, constroller.logout);
 
 module.exports = router;
