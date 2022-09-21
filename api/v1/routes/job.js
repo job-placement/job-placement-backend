@@ -1,20 +1,15 @@
-const express = require("express")
-const router = express.Router()
-const { body } = require('express-validator')
-const Job = require('../models/Job')
-const jobsController = require('../controllers/jobsController')
+const router = require('express').Router();
+const controller = require('../controllers/jobsController');
+const { checkIfLoggedIn } = require(
+  '../validations/userValidation');
 
+router.route('/jobs')
+	.get(controller.getJobs)
+  .post(checkIfLoggedIn, controller.createJob);
 
-/*
+router.route('/jobs/:jobId')
+  .get(controller.getJobById)
+  .put(checkIfLoggedIn, controller.editJob)
+  .delete(checkIfLoggedIn, controller.deleteJob);
 
-TODO: finish building remaining endpoints to support CRUD actions
-
-*/
-router.post('/users/:userId/create-job', jobsController.createJob)
-router.get('/jobs', jobsController.getJobs)
-router.get('/jobs/:jobId', jobsController.getJobById)
-router.get('/users/:userId/jobs/:jobId', jobsController.getJobByUser)
-router.put('/users/:userId/jobs/:jobId', jobsController.editJob)
-router.delete('/users/:userId/jobs/:jobId/delete', jobsController.deleteJob)
-
-module.exports = router
+module.exports = router;

@@ -1,19 +1,18 @@
 const express = require('express');
 const session = require('express-session');
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
-const { db } = require('../api/v1/models');
-const sessionStore = new SequelizeStore({ db });
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const passport = require('passport');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const app = express();
 const PORT = process.env.PORT || 3005;
 const userRoutes = require('../api/v1/routes/user');
 const jobRoutes = require('../api/v1/routes/job');
-const jobSkillRoutes = require('../api/v1/routes/jobSkill');
 const skillRoutes = require('../api/v1/routes/skill');
+const { db } = require('../api/v1/models');
+const sessionStore = new SequelizeStore({ db });
 
 require('../api/v1/controllers/passportController')(passport);
 
@@ -43,24 +42,13 @@ app.use(passport.session());
 
 app.use(userRoutes);
 app.use(jobRoutes);
-app.use(jobSkillRoutes);
 app.use(skillRoutes);
-
-/* Error handling redirects
-
-const errorController = require('../api/v1/controllers/errorsController')
-
-app.get('/500', errorController.get500Page)
-
-app.use(errorController.get404Page)
-
-*/
 
 app.use((error, req, res, next) => {
   console.error(error.stack)
   res.status(500).send(error.message);
 });
 
-app.listen(PORT, function() {
+app.listen(PORT, () => {
 	console.log(`Listening to port: ${PORT}`);
 });
