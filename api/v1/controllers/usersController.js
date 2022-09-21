@@ -18,7 +18,7 @@ const getUsers = async (request, response) => {
 
 const getUserById = async (request, response) => {
   try {
-    const userId = request.user.id;
+    const userId = request.body.id || request.user.id;
     const user = await User.findByPk(userId, {
       include: Job
     });
@@ -33,15 +33,14 @@ const updateUser = async (request, response) => {
     const userId = request.body.id || request.user.id;
     const userToUpdate = await User.findByPk(userId);
     const { firstName, lastName, email, password,
-      image, resume, bio, experience
-    } = request.body;
+      image, resume, bio, experience } = request.body;
     const saltRounds = 10;
-    const encrypted = await bcrypt.hash(password, saltRounds);
+    const encrypt = await bcrypt.hash(password, saltRounds);
     const updatedUser = await userToUpdate.update({
       firstName: firstName || userToUpdate.firstName,
       lastName: lastName || userToUpdate.lastName,
       email: email || userToUpdate.email,
-      password: encrypted || userToUpdate.password,
+      password: encrypt || userToUpdate.password,
       image: image || userToUpdate.image,
       resume: resume || userToUpdate.resume,
       bio: bio || userToUpdate.bio,
@@ -65,17 +64,20 @@ const deleteUser = async (request, response) => {
 };
 
 const signup = async (request, response, next) => {
-  const { firstName, lastName, email, password } = request.body;
+  const { firstName, lastName, email, password
+    } = request.body;
   const saltRounds = 10;
-  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  const hashedPass = await bcrypt.hash(password, saltRounds);
   const userCredential = {
     firstName,
     lastName,
     email,
-    password: hashedPassword
+    password: hashedPass
   }
   try {
-    const alreadyExistUser = await User.findOne({ where: { email }});
+    const alreadyExistUser = await User.findOne({
+      where: { email }
+    });
     if (alreadyExistUser) {
       return response.status(409).send('Email already exist');
     }
