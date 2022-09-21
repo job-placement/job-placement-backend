@@ -4,3 +4,4 @@ node_modules
 .env
 coverage
 Placement.session.sql
+notes.js
