@@ -85,7 +85,6 @@ describe('All json file should have data', () => {
       expect(users[9].firstName).toBe('Tyler');
       expect(users[9].lastName).toBe('Perry');
       expect(users[9].email).toBe('tylerperry@gmail.com');
-      expect(users[9].password).toBe('happy');
       expect(users[9].experience).toBe(1);
     });
   });

@@ -109,7 +109,6 @@ describe.only('Database, Sequelize and Models', () => {
 
       expect(user.firstName).toBe('Morgan');
       expect(user.lastName).toBe('Freeman');
-      expect(user.password).toBe('happy');
       expect(user.bio).toBe('HappyPerson');
       expect(user.experience).toBe(1);
     })
