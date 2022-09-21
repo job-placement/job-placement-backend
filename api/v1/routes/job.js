@@ -1,25 +1,15 @@
-const router = require("express").Router();
-const { body } = require('express-validator');
-const { getJobs, getJobById, createJob,
-        getJobByUser, editJob, deleteJob
-      } = require('../controllers/jobsController');
-const { ensureAuthenticated
-      } = require('../controllers/usersController');
+const router = require('express').Router();
+const controller = require('../controllers/jobsController');
+const { checkIfLoggedIn } = require(
+  '../validations/userValidation');
 
 router.route('/jobs')
-	.get(getJobs);
+	.get(controller.getJobs)
+  .post(checkIfLoggedIn, controller.createJob);
 
 router.route('/jobs/:jobId')
-  .get(ensureAuthenticated, getJobById);
-
-router.route('/users/:userId/create-job')
-  .post(ensureAuthenticated, createJob);
-
-router.route('/users/:userId/jobs/:jobId')
-  .get(ensureAuthenticated, getJobByUser)
-  .put(ensureAuthenticated, editJob);
-
-router.delete('/users/:userId/jobs/:jobId/delete')
-  .delete(ensureAuthenticated, deleteJob);
+  .get(controller.getJobById)
+  .put(checkIfLoggedIn, controller.editJob)
+  .delete(checkIfLoggedIn, controller.deleteJob);
 
 module.exports = router;
