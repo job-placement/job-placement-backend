@@ -4,7 +4,7 @@ const { checkIfLoggedIn } = require(
   '../validations/userValidation');
 
 router.route('/jobs')
-	.get(controller.getJobs)
+  .get(controller.getJobs)
   .post(checkIfLoggedIn, controller.createJob);
 
 router.route('/jobs/:jobId')

@@ -8,8 +8,3 @@ exports.checkIfLoggedIn = (request, response, next) => {
   if (request.isAuthenticated()) return next();
   return response.status(401).send('Please log in to proceed');
 }
-
-exports.checkIfAdmin = (request, response, next) => {
-  if (request.user.admin) return next();
-  return response.status(401).send('Only Admins are allowed');
-}

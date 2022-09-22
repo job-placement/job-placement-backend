@@ -3,8 +3,9 @@ const passport = require('passport');
 
 const { User, Job, Skill } = require('../models');
 
-const getUsers = async (request, response) => {
+const getUsers = async (request, response, next) => {
   try {
+    if (!request.user.admin) return next();
     const users = await User.findAll({
       include: [
         { model: Job, include: Skill }

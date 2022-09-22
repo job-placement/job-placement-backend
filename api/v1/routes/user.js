@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const constroller = require('../controllers/usersController');
-const { fowardLoggedInUser, checkIfLoggedIn, checkIfAdmin
+const { fowardLoggedInUser, checkIfLoggedIn
 	} = require('../validations/userValidation');
 
 router.route('/users')
-	.get(checkIfLoggedIn, checkIfAdmin, constroller.getUsers)
-	.get(checkIfLoggedIn, constroller.getUserById)
+	.get(checkIfLoggedIn, constroller.getUsers)
+	.get(constroller.getUserById)
 	.put(checkIfLoggedIn, constroller.updateUser)
 	.delete(checkIfLoggedIn, constroller.deleteUser);
 
