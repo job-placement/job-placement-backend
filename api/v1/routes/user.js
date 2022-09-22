@@ -4,8 +4,8 @@ const { fowardLoggedInUser, checkIfLoggedIn
 	} = require('../validations/userValidation');
 
 router.route('/users')
-	.get(checkIfLoggedIn, constroller.getUsers)
-	.get(constroller.getUserById)
+	.get(checkIfLoggedIn, constroller.getUsers,
+		constroller.getUserById)
 	.put(checkIfLoggedIn, constroller.updateUser)
 	.delete(checkIfLoggedIn, constroller.deleteUser);
 
