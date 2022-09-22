@@ -46,7 +46,8 @@ app.use(skillRoutes);
 
 app.use((error, req, res, next) => {
   console.error(error.stack)
-  res.status(500).send(error.message);
+  res.status(error.status || 500)
+		.send(error.message || 'Internal server error!');
 });
 
 app.listen(PORT, () => {
