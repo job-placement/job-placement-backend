@@ -3,7 +3,7 @@ const constroller = require('../controllers/usersController');
 const { fowardLoggedInUser, checkIfLoggedIn
 	} = require('../validations/userValidation');
 
-router.route('/users')
+router.route('/')
 	.get(checkIfLoggedIn, constroller.getUsers,
 		constroller.getUserById)
 	.put(checkIfLoggedIn, constroller.updateUser)

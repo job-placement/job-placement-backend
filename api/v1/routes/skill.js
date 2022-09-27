@@ -4,7 +4,7 @@ const {
         getSkills
       } = require('../controllers/skillsController');
 
-router.route('/skills')
+router.route('/')
   .get(getSkills);
 
 module.exports = router;
