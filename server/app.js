@@ -8,9 +8,6 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const app = express();
 const PORT = process.env.PORT || 3005;
-const userRoutes = require('../api/v1/routes/user');
-const jobRoutes = require('../api/v1/routes/job');
-const skillRoutes = require('../api/v1/routes/skill');
 const { db } = require('../api/v1/models');
 const sessionStore = new SequelizeStore({ db });
 
@@ -40,9 +37,7 @@ sessionStore.sync();
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(userRoutes);
-app.use(jobRoutes);
-app.use(skillRoutes);
+app.use('/api', require('../api/v1/routes'));
 
 app.use((error, req, res, next) => {
   console.error(error.stack)
