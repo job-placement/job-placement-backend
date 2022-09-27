@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const helmet = require('helmet');
+const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const passport = require('passport');
@@ -18,6 +19,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use(helmet());
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
