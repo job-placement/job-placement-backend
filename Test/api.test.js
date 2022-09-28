@@ -1,4 +1,32 @@
-test.skip('1 + 2 should equal 3', () => {
-  const sum = (a, b) => a + b;
-  expect(sum(1, 2)).toBe(3);
+const app = require('../server/app');
+const agent = require('supertest')(app);
+const session = require('supertest-session');
+const { seed } = require('../server/seed');
+
+describe('API routes', () => {
+  beforeAll(async () => {
+    await seed();
+  });
+
+  afterAll(async () => {
+    await seed();
+  });
+
+  describe('Users API', async () => {
+    const response = await agent.get('/api/users')
+  });
+
+  describe('Jobs API', () => {
+
+  });
+
+  describe('Skills API', () => {
+
+  });
+});
+
+describe('User session', () => {
+  describe('Authentication API', () => {
+
+  });
 });

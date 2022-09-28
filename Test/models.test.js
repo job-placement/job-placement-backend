@@ -5,12 +5,12 @@ const {
   db } = require('../api/v1/models');
 const { Sequelize } = require('sequelize');
 
-describe.only('Database, Sequelize and Models', () => {
+describe('Database, Sequelize and Models', () => {
   describe('db', () => {
-    test('should be an instance of Sequelize', () => {
+    test('should be an instance of sequelize', () => {
       expect(db).toBeInstanceOf(Sequelize);
     });
-  });
+  })
 
   describe('Job Model', () => {
     beforeAll(async () => {
