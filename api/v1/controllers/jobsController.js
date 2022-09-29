@@ -1,4 +1,4 @@
-const { Job, Skill, JobSkill } = require('../models');
+const { Job, Skill, JobSkill } = require("../models");
 
 const getJobs = async (request, response) => {
   try {
@@ -23,9 +23,18 @@ const getJobById = async (request, response) => {
 
 const createJob = async (request, response) => {
   try {
-    const { company, logo, featured, position, role,
-      level, postedAt, contract, location, skills
-    }= request.body;
+    const {
+      company,
+      logo,
+      featured,
+      position,
+      role,
+      level,
+      postedAt,
+      contract,
+      location,
+      skills,
+    } = request.body;
     const newJob = await Job.create({
       company,
       logo,
@@ -48,8 +57,7 @@ const createJob = async (request, response) => {
         });
       }
     }
-    const result = await Job.findByPk(newJob.id, {
-      include: Skill });
+    const result = await Job.findByPk(newJob.id, { include: Skill });
     response.json(result);
   } catch (error) {
     console.error(error);
@@ -58,16 +66,24 @@ const createJob = async (request, response) => {
 
 const editJob = async (request, response) => {
   try {
-    const { company, logo, featured, position,
-      role, level, postedAt, contract, location
+    const {
+      company,
+      logo,
+      featured,
+      position,
+      role,
+      level,
+      postedAt,
+      contract,
+      location,
     } = request.body;
     const { id, admin } = request.user;
     const { jobId } = request.params;
     const job = await Job.findByPk(jobId, {
-      include: Skill
+      include: Skill,
     });
     if (job.UserId !== id && !admin) {
-      return response.send('Only the creater can modify');
+      return response.send("Only the creater can modify");
     }
     job.update({
       company: company || job.company,
@@ -82,7 +98,7 @@ const editJob = async (request, response) => {
       location: location || job.location,
     });
     if (request.body.skills) {
-      await JobSkill.destroy({ where: { JobId: jobId }});
+      await JobSkill.destroy({ where: { JobId: jobId } });
       const allSkills = await Skill.findAll();
       for (let i = 0; i < allSkills.length; i++) {
         if (request.body.skills.includes(allSkills[i].name)) {
@@ -94,7 +110,7 @@ const editJob = async (request, response) => {
       }
     }
     const updatedJob = await Job.findByPk(jobId, {
-      include: Skill
+      include: Skill,
     });
     response.json(updatedJob);
   } catch (error) {
@@ -104,11 +120,11 @@ const editJob = async (request, response) => {
 
 const deleteJob = async (request, response) => {
   try {
-    const { jobId } = request.params
+    const { jobId } = request.params;
     const { id, admin } = request.user;
     const deletedJob = await Job.findByPk(jobId);
     if (deletedJob.UserId !== id && !admin) {
-      return response.send('Only the creater can delete');
+      return response.send("Only the creater can delete");
     }
     await deletedJob.destroy();
     response.json(deletedJob);

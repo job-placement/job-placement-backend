@@ -1,4 +1,4 @@
-const { Skill } = require('../models/index');
+const { Skill } = require("../models/index");
 
 const getSkills = async (request, response) => {
   try {
@@ -7,8 +7,8 @@ const getSkills = async (request, response) => {
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 module.exports = {
-  getSkills
-}
+  getSkills,
+};

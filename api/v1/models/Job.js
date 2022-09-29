@@ -1,6 +1,6 @@
 /** @format */
 
-const { db, DataTypes, Model } = require('../../../server/db');
+const { db, DataTypes, Model } = require("../../../server/db");
 
 class Job extends Model {}
 

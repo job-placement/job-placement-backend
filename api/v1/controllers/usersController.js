@@ -1,15 +1,13 @@
-const bcrypt = require('bcrypt');
-const passport = require('passport');
+const bcrypt = require("bcrypt");
+const passport = require("passport");
 
-const { User, Job, Skill } = require('../models');
+const { User, Job, Skill } = require("../models");
 
 const getUsers = async (request, response, next) => {
   try {
     if (!request.user.admin) return next();
     const users = await User.findAll({
-      include: [
-        { model: Job, include: Skill }
-      ]
+      include: [{ model: Job, include: Skill }],
     });
     response.json(users);
   } catch (error) {
@@ -21,7 +19,7 @@ const getUserById = async (request, response) => {
   try {
     const userId = request.body.id || request.user.id;
     const user = await User.findByPk(userId, {
-      include: Job
+      include: Job,
     });
     response.json(user);
   } catch (error) {
@@ -33,8 +31,16 @@ const updateUser = async (request, response) => {
   try {
     const userId = request.body.id || request.user.id;
     const userToUpdate = await User.findByPk(userId);
-    const { firstName, lastName, email, password,
-      image, resume, bio, experience } = request.body;
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      image,
+      resume,
+      bio,
+      experience,
+    } = request.body;
     const saltRounds = 10;
     const encrypt = await bcrypt.hash(password, saltRounds);
     const updatedUser = await userToUpdate.update({
@@ -45,7 +51,7 @@ const updateUser = async (request, response) => {
       image: image || userToUpdate.image,
       resume: resume || userToUpdate.resume,
       bio: bio || userToUpdate.bio,
-      experience: experience || userToUpdate.experience
+      experience: experience || userToUpdate.experience,
     });
     response.json(updatedUser);
   } catch (error) {
@@ -60,52 +66,51 @@ const deleteUser = async (request, response) => {
     await userToDelete.destroy();
     response.json(userToDelete);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 };
 
 const signup = async (request, response, next) => {
-  const { firstName, lastName, email, password
-    } = request.body;
+  const { firstName, lastName, email, password } = request.body;
   const saltRounds = 10;
   const hashedPass = await bcrypt.hash(password, saltRounds);
   const userCredential = {
     firstName,
     lastName,
     email,
-    password: hashedPass
-  }
+    password: hashedPass,
+  };
   try {
     const alreadyExistUser = await User.findOne({
-      where: { email }
+      where: { email },
     });
     if (alreadyExistUser) {
-      return response.status(409).send('Email already exist');
+      return response.status(409).send("Email already exist");
     }
     const createdUser = await User.create(userCredential);
     const user = {
       id: createdUser.id,
-      email: createdUser.email
-    }
+      email: createdUser.email,
+    };
     // log in a user after signed up is successful
     request.login(user, (error) => {
       if (error) return next(error);
-      console.log('Successfully signed up!');
+      console.log("Successfully signed up!");
       return response.json(user);
     });
-  } catch(error) {
+  } catch (error) {
     console.error(error);
   }
 };
 
 const login = (request, response, next) => {
-  passport.authenticate('local', (error, user, info)=> {
+  passport.authenticate("local", (error, user, info) => {
     if (error) return next(error);
     if (info) return response.status(401).json(info.message);
     // function used to log in a user
-    request.logIn(user, error => {
+    request.logIn(user, (error) => {
       if (error) return next(error);
-      console.log('Successfully logged in!');
+      console.log("Successfully logged in!");
       return response.json(user);
     });
   })(request, response, next);
@@ -115,7 +120,7 @@ const logout = async (request, response, next) => {
   const user = request.user;
   request.logout((error) => {
     if (error) return next(error);
-    console.log('Successfully logged out!');
+    console.log("Successfully logged out!");
     return response.json(user);
   });
 };
