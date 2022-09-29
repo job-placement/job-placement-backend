@@ -1,114 +1,114 @@
 {
-  "users": [
-    {
-      "firstName": "Natalie",
-      "lastName": "Morales",
-      "email": "nmorales@gmail.com",
-      "password": "happy",
-      "image": "HappyFace",
-      "resume": "HappyWorker",
-      "bio": "HappyPerson",
-      "experience": 1,
-      "admin": false
-    },
-    {
-      "firstName": "Bruce",
-      "lastName": "Willis",
-      "email": "brucewillis@aol.com",
-      "password": "happy",
-      "image": "HappyFace",
-      "resume": "HappyWorker",
-      "bio": "HappyPerson",
-      "experience": 1,
-      "admin": true
-    },
-    {
-      "firstName": "Hiroyuki",
-      "lastName": "Sanada",
-      "email": "hiroyuki5@yahoo.com",
-      "password": "happy",
-      "image": "HappyFace",
-      "resume": "HappyWorker",
-      "bio": "HappyPerson",
-      "experience": 1,
-      "admin": false
-    },
-    {
-      "firstName": "Michelle",
-      "lastName": "Rodriguez",
-      "email": "mrodriguez@gmail.com",
-      "password": "happy",
-      "image": "HappyFace",
-      "resume": "HappyWorker",
-      "bio": "HappyPerson",
-      "experience": 1,
-      "admin": false
-    },
-    {
-      "firstName": "Morgan",
-      "lastName": "Freeman",
-      "email": "morganfreeman@aol.com",
-      "password": "happy",
-      "image": "HappyFace",
-      "resume": "HappyWorker",
-      "bio": "HappyPerson",
-      "experience": 1,
-      "admin": false
-    },
-    {
-      "firstName": "Ben",
-      "lastName": "Affleck",
-      "email": "benaffleck@gmail.com",
-      "password": "happy",
-      "image": "HappyFace",
-      "resume": "HappyWorker",
-      "bio": "HappyPerson",
-      "experience": 1,
-      "admin": false
-    },
-    {
-      "firstName": "Johnny",
-      "lastName": "Knoxville",
-      "email": "johnknoxville@hotmail.com",
-      "password": "happy",
-      "image": "HappyFace",
-      "resume": "HappyWorker",
-      "bio": "HappyPerson",
-      "experience": 1,
-      "admin": false
-    },
-    {
-      "firstName": "Salma",
-      "lastName": "Hayek",
-      "email": "salmahayek@hotmail.com",
-      "password": "happy",
-      "image": "HappyFace",
-      "resume": "HappyWorker",
-      "bio": "HappyPerson",
-      "experience": 1,
-      "admin": false
-    },
-    {
-      "firstName": "Idris",
-      "lastName": "Elba",
-      "email": "idriselba15@gmail.com",
-      "password": "happy",
-      "image": "HappyFace",
-      "resume": "HappyWorker",
-      "bio": "HappyPerson",
-      "experience": 1,
-      "admin": false
-    },
-    {
-      "firstName": "Tyler",
-      "lastName": "Perry",
-      "email": "tylerperry@gmail.com",
-      "password": "happy",
-      "image": "HappyFace",
-      "resume": "HappyWorker",
-      "bio": "HappyPerson",
-      "experience": 1,
-      "admin": false
-    }
-  ]
+	"users": [
+		{
+			"firstName": "Natalie",
+			"lastName": "Morales",
+			"email": "nmorales@gmail.com",
+			"password": "happy",
+			"image": "HappyFace",
+			"resume": "HappyWorker",
+			"bio": "HappyPerson",
+			"experience": 1,
+			"admin": false
+		},
+		{
+			"firstName": "Bruce",
+			"lastName": "Willis",
+			"email": "brucewillis@aol.com",
+			"password": "happy",
+			"image": "HappyFace",
+			"resume": "HappyWorker",
+			"bio": "HappyPerson",
+			"experience": 1,
+			"admin": true
+		},
+		{
+			"firstName": "Hiroyuki",
+			"lastName": "Sanada",
+			"email": "hiroyuki5@yahoo.com",
+			"password": "happy",
+			"image": "HappyFace",
+			"resume": "HappyWorker",
+			"bio": "HappyPerson",
+			"experience": 1,
+			"admin": false
+		},
+		{
+			"firstName": "Michelle",
+			"lastName": "Rodriguez",
+			"email": "mrodriguez@gmail.com",
+			"password": "happy",
+			"image": "HappyFace",
+			"resume": "HappyWorker",
+			"bio": "HappyPerson",
+			"experience": 1,
+			"admin": false
+		},
+		{
+			"firstName": "Morgan",
+			"lastName": "Freeman",
+			"email": "morganfreeman@aol.com",
+			"password": "happy",
+			"image": "HappyFace",
+			"resume": "HappyWorker",
+			"bio": "HappyPerson",
+			"experience": 1,
+			"admin": false
+		},
+		{
+			"firstName": "Ben",
+			"lastName": "Affleck",
+			"email": "benaffleck@gmail.com",
+			"password": "happy",
+			"image": "HappyFace",
+			"resume": "HappyWorker",
+			"bio": "HappyPerson",
+			"experience": 1,
+			"admin": false
+		},
+		{
+			"firstName": "Johnny",
+			"lastName": "Knoxville",
+			"email": "johnknoxville@hotmail.com",
+			"password": "happy",
+			"image": "HappyFace",
+			"resume": "HappyWorker",
+			"bio": "HappyPerson",
+			"experience": 1,
+			"admin": false
+		},
+		{
+			"firstName": "Salma",
+			"lastName": "Hayek",
+			"email": "salmahayek@hotmail.com",
+			"password": "happy",
+			"image": "HappyFace",
+			"resume": "HappyWorker",
+			"bio": "HappyPerson",
+			"experience": 1,
+			"admin": false
+		},
+		{
+			"firstName": "Idris",
+			"lastName": "Elba",
+			"email": "idriselba15@gmail.com",
+			"password": "happy",
+			"image": "HappyFace",
+			"resume": "HappyWorker",
+			"bio": "HappyPerson",
+			"experience": 1,
+			"admin": false
+		},
+		{
+			"firstName": "Tyler",
+			"lastName": "Perry",
+			"email": "tylerperry@gmail.com",
+			"password": "happy",
+			"image": "HappyFace",
+			"resume": "HappyWorker",
+			"bio": "HappyPerson",
+			"experience": 1,
+			"admin": false
+		}
+	]
 }

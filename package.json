@@ -11,7 +11,8 @@
     "test": "node server/seed & jest --detectOpenHandles",
     "seed": "node server/seed",
     "start": "node server/app.js",
-    "server": "standard --fix && nodemon server/app.js"
+    "server": "nodemon server/app.js",
+    "lint": "standard"
   },
   "repository": {
     "type": "git",
@@ -46,5 +47,10 @@
     "standard": "^17.0.0",
     "supertest": "^6.2.4",
     "supertest-session": "^4.1.0"
+  },
+  "standard": {
+    "env": [
+      "jest"
+    ]
   }
 }
