@@ -49,14 +49,13 @@ const createJob = async (request, response) => {
 			UserId: request.user.id
 		});
 		const allSkills = await Skill.findAll();
-		for (let i = 0; i < allSkills.length; i++) {
-			if (skills.includes(allSkills[i].name)) {
-				await JobSkill.create({
-					JobId: newJob.id,
-					SkillId: allSkills[i].id
-				});
-			}
-		}
+		const jobSkills = allSkills
+			.filter(skill => skills.includes(skill.name))
+			.map(skill => ({
+				JobId: newJob.id,
+				SkillId: skill.id
+			}));
+		await JobSkill.bulkCreate(jobSkills);
 		const result = await Job.findByPk(newJob.id, {
 			include: Skill
 		});
@@ -77,17 +76,18 @@ const editJob = async (request, response) => {
 			level,
 			postedAt,
 			contract,
-			location
+			location,
+			skills
 		} = request.body;
 		const { id, admin } = request.user;
 		const { jobId } = request.params;
-		const job = await Job.findByPk(jobId, {
+		const updateJob = await Job.findByPk(jobId, {
 			include: Skill
 		});
-		if (job.UserId !== id && !admin) {
+		if (updateJob.UserId !== id && !admin) {
 			return response.send('Only the creater can modify');
 		}
-		job.update({
+		updateJob.update({
 			company: company || job.company,
 			logo: logo || job.logo,
 			new: request.body.new || job.new,
@@ -99,19 +99,16 @@ const editJob = async (request, response) => {
 			contract: contract || job.contract,
 			location: location || job.location
 		});
-		if (request.body.skills) {
+		if (skills) {
 			await JobSkill.destroy({ where: { JobId: jobId } });
 			const allSkills = await Skill.findAll();
-			for (let i = 0; i < allSkills.length; i++) {
-				if (
-					request.body.skills.includes(allSkills[i].name)
-				) {
-					await JobSkill.create({
-						JobId: job.id,
-						SkillId: allSkills[i].id
-					});
-				}
-			}
+			const jobSkills = allSkills
+				.filter(skill => skills.includes(skill.name))
+				.map(skill => ({
+					JobId: updateJob.id,
+					SkillId: skill.id
+				}));
+			await JobSkill.bulkCreate(jobSkills);
 		}
 		const updatedJob = await Job.findByPk(jobId, {
 			include: Skill
