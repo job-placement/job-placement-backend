@@ -9,10 +9,10 @@ const SequelizeStore = require('connect-session-sequelize')(
 	session.Store
 );
 
-const app = express();
-const PORT = process.env.PORT || 3005;
 const { db } = require('../api/v1/models');
 const sessionStore = new SequelizeStore({ db });
+
+const app = express();
 
 require('../api/v1/controllers/passportController')(
 	passport
@@ -52,6 +52,4 @@ app.use((error, req, res, next) => {
 		.send(error.message || 'Internal server error!');
 });
 
-app.listen(PORT, () => {
-	console.log(`Listening to port: ${PORT}`);
-});
+module.exports = app;
