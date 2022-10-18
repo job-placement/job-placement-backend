@@ -15,8 +15,11 @@ describe('API routes', () => {
 	});
 
 	describe('Users API', () => {
+		const loggedinMessage = 'You are already logged in';
+		const loginMessage = 'Please log in to proceed';
 		let getUser, updateUser, deleteUser, loginUser, newUser;
-		describe('Validating Unauthorize User', () => {
+
+		describe.skip('Validating Unauthorize User', () => {
 			beforeAll(async () => {
 				getUser = await agent.get('/api/users');
 				updateUser = await agent.put('/api/users').send({
@@ -72,7 +75,12 @@ describe('API routes', () => {
 			});
 		});
 
-		let loggedinUser, adminUser;
+		let loggedInUser, loggedOutUser, adminUser, randomUser;
+		const userCredential = {
+			email: 'nmorales@gmail.com',
+			password: 'happy'
+		};
+
 		beforeAll(async () => {
 			login = await agent.post('/api/users/login').send({
 				email: 'brucewillis@aol.com',
@@ -85,34 +93,52 @@ describe('API routes', () => {
 			test('should log in successfully', async () => {
 				const login = await agent
 					.post('/api/users/login')
-					.send({
-						email: 'nmorales@gmail.com',
-						password: 'happy'
-					})
+					.send(userCredential)
 					.expect(200);
-				expect(login.body.firstName).toBe('Natalie');
-				expect(login.body.email).toBe('nmorales@gmail.com');
-				expect(login.body.bio).toBe('HappyPerson');
-				loggedinUser = login.headers['set-cookie'];
+				const user = login.body;
+				expect(user).toHaveProperty('firstName', 'Natalie');
+				expect(user).toHaveProperty('lastName', 'Morales');
+				expect(user).toHaveProperty(
+					'email',
+					'nmorales@gmail.com'
+				);
+				loggedInUser = login.headers['set-cookie'];
 			});
 			test('should prevent logged in user to log in', async () => {
-				const message = 'You are already logged in';
 				const user = await agent
 					.post('/api/users/login')
-					.set('cookie', loggedinUser)
-					.send({
-						email: 'nmorales@gmail.com',
-						password: 'happy'
-					})
+					.set('cookie', loggedInUser)
+					.send(userCredential)
 					.expect(301);
-				expect(user.text).toBe(message);
+				expect(user.text).toBe(loggedinMessage);
 			});
 		});
-		describe.skip('/api/users/logout', () => {
-			test('should be logged in', async () => {
-				expect(response.body).toHaveLength(1);
+
+		describe('/api/users/logout', () => {
+			test('should successfully logout', async () => {
+				loggedOutUser = await agent
+					.post('/api/users/logout')
+					.set('cookie', loggedInUser)
+					.expect(200);
+				const { firstName, lastName, email } =
+					loggedOutUser.body;
+				expect(firstName).toBe('Natalie');
+				expect(lastName).toBe('Morales');
+				expect(email).toBe('nmorales@gmail.com');
+			});
+			test('should block unauthorized user', async () => {
+				randomUser = await agent
+					.post('/api/users/logout')
+					.expect(401);
+				loggedOutUser = await agent
+					.post('/api/users/logout')
+					.set('cookie', loggedInUser)
+					.expect(401);
+				expect(randomUser.text).toBe(loginMessage);
+				expect(loggedOutUser.text).toBe(loginMessage);
 			});
 		});
+
 		describe.skip('/api/users/signup', () => {
 			test('should return a user', async () => {
 				expect(response.body).toHaveLength(1);
@@ -127,7 +153,7 @@ describe('API routes', () => {
 
 	// describe('Jobs API', () => {});
 
-	describe('Skills API', () => {
+	describe.skip('Skills API', () => {
 		describe('/api/skills', () => {
 			let skills;
 			beforeAll(async () => {
