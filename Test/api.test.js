@@ -112,6 +112,25 @@ describe('API routes', () => {
 					.expect(301);
 				expect(user.text).toBe(loggedInMessage);
 			});
+			test('should return an error for wrong credential', async () => {
+				const message = 'Incorrect Email or Password!';
+				wrongEmail = await agent
+					.post('/api/users/login')
+					.send({
+						email: 'tom@gmail.com',
+						password: 'happy'
+					})
+					.expect(401);
+				wrongPassword = await agent
+					.post('/api/users/login')
+					.send({
+						email: 'nmorales@gmail.com',
+						password: 'happi'
+					})
+					.expect(401);
+				expect(wrongEmail.body).toBe(message);
+				expect(wrongPassword.body).toBe(message);
+			});
 		});
 
 		describe('/api/users/logout', () => {
