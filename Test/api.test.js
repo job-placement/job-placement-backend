@@ -15,8 +15,6 @@ describe('API routes', () => {
 	});
 
 	describe('Users API', () => {
-		const loggedinMessage = 'You are already logged in';
-		const loginMessage = 'Please log in to proceed';
 		let getUser, updateUser, deleteUser, loginUser, newUser;
 
 		describe.skip('Validating Unauthorize User', () => {
@@ -75,6 +73,8 @@ describe('API routes', () => {
 			});
 		});
 
+		const loggedInMessage = 'You are already logged in';
+		const loginMessage = 'Please log in to proceed';
 		let loggedInUser, loggedOutUser, adminUser, randomUser;
 		const userCredential = {
 			email: 'nmorales@gmail.com',
@@ -95,6 +95,7 @@ describe('API routes', () => {
 					.post('/api/users/login')
 					.send(userCredential)
 					.expect(200);
+				loggedInUser = login.headers['set-cookie'];
 				const user = login.body;
 				expect(user).toHaveProperty('firstName', 'Natalie');
 				expect(user).toHaveProperty('lastName', 'Morales');
@@ -102,7 +103,6 @@ describe('API routes', () => {
 					'email',
 					'nmorales@gmail.com'
 				);
-				loggedInUser = login.headers['set-cookie'];
 			});
 			test('should prevent logged in user to log in', async () => {
 				const user = await agent
@@ -110,7 +110,7 @@ describe('API routes', () => {
 					.set('cookie', loggedInUser)
 					.send(userCredential)
 					.expect(301);
-				expect(user.text).toBe(loggedinMessage);
+				expect(user.text).toBe(loggedInMessage);
 			});
 		});
 
@@ -139,9 +139,33 @@ describe('API routes', () => {
 			});
 		});
 
-		describe.skip('/api/users/signup', () => {
-			test('should return a user', async () => {
-				expect(response.body).toHaveLength(1);
+		describe('/api/users/signup', () => {
+			test('should successfully sign up', async () => {
+				const newUser = await agent
+					.post('/api/users/signup')
+					.send({
+						firstName: 'new',
+						lastName: 'user',
+						email: 'newUser@gmail.com',
+						password: 'boom'
+					})
+					.expect(200);
+				loggedInUser = newUser.headers['set-cookie'];
+				const { email } = newUser.body;
+				expect(email).toBe('newUser@gmail.com');
+			});
+			test('should prevent logged in user to sign up', async () => {
+				newUser = await agent
+					.post('/api/users/signup')
+					.set('cookie', loggedInUser)
+					.send({
+						firstName: 'new',
+						lastName: 'user',
+						email: 'newUser@gmail.com',
+						password: 'boom'
+					})
+					.expect(301);
+				expect(newUser.text).toBe(loggedInMessage);
 			});
 		});
 		describe.skip('/api/users', () => {
