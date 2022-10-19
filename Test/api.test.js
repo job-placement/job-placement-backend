@@ -186,7 +186,20 @@ describe('API routes', () => {
 					.expect(301);
 				expect(newUser.text).toBe(loggedInMessage);
 			});
+			test('should prevent duplicate email', async () => {
+				const user = await agent
+					.post('/api/users/signup')
+					.send({
+						firstName: 'existing',
+						lastName: 'user',
+						email: 'newUser@gmail.com',
+						password: 'boo'
+					})
+					.expect(409);
+				expect(user.text).toBe('Email already exist');
+			});
 		});
+
 		describe.skip('/api/users', () => {
 			test('should return a user', async () => {
 				expect(response.body).toHaveLength(1);
