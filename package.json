@@ -9,6 +9,7 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "jest --detectOpenHandles",
+		"test:watch": "jest --detectOpenHandles --watch",
 		"seed": "node server/seed",
 		"start": "node server/index.js",
 		"server": "nodemon server/index.js"
