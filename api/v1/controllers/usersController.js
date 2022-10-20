@@ -67,12 +67,18 @@ const deleteUser = async (request, response) => {
 		response.json(userToDelete);
 	} catch (error) {
 		console.error(error);
+		next(error);
 	}
 };
 
 const signup = async (request, response, next) => {
 	const { firstName, lastName, email, password } =
 		request.body;
+	if (!firstName || !lastName || !email || !password) {
+		return response
+			.status(400)
+			.send('All fields must be filled out');
+	}
 	const saltRounds = 10;
 	const hashedPass = await bcrypt.hash(
 		password,
