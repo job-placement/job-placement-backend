@@ -12,6 +12,7 @@ const getUsers = async (request, response, next) => {
 		response.json(users);
 	} catch (error) {
 		console.error(error);
+		next(error);
 	}
 };
 
@@ -24,6 +25,7 @@ const getUserById = async (request, response) => {
 		response.json(user);
 	} catch (error) {
 		console.error(error);
+		next(error);
 	}
 };
 
@@ -56,6 +58,7 @@ const updateUser = async (request, response) => {
 		response.json(updatedUser);
 	} catch (error) {
 		console.error(error);
+		next(error);
 	}
 };
 
@@ -112,6 +115,7 @@ const signup = async (request, response, next) => {
 		});
 	} catch (error) {
 		console.error(error);
+		next(error);
 	}
 };
 
