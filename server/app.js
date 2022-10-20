@@ -45,9 +45,9 @@ app.use(passport.session());
 
 app.use('/api', require('../api/v1/routes'));
 
-app.use((error, req, res, next) => {
+app.use((error, request, response, next) => {
 	console.error(error.stack);
-	res
+	response
 		.status(error.status || 500)
 		.send(error.message || 'Internal server error!');
 });
