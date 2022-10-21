@@ -16,7 +16,7 @@ const getUsers = async (request, response, next) => {
 	}
 };
 
-const getUserById = async (request, response) => {
+const getUserById = async (request, response, next) => {
 	try {
 		const userId = request.body.id || request.user.id;
 		const user = await User.findByPk(userId, {
@@ -29,7 +29,7 @@ const getUserById = async (request, response) => {
 	}
 };
 
-const updateUser = async (request, response) => {
+const updateUser = async (request, response, next) => {
 	try {
 		const userId = request.body.id || request.user.id;
 		const userToUpdate = await User.findByPk(userId);
@@ -62,7 +62,7 @@ const updateUser = async (request, response) => {
 	}
 };
 
-const deleteUser = async (request, response) => {
+const deleteUser = async (request, response, next) => {
 	try {
 		const userId = request.body.id || request.user.id;
 		const userToDelete = await User.findByPk(userId);
