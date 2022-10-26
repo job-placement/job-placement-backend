@@ -33,28 +33,15 @@ const updateUser = async (request, response, next) => {
 	try {
 		const userId = request.body.id || request.user.id;
 		const userToUpdate = await User.findByPk(userId);
-		const {
-			firstName,
-			lastName,
-			email,
-			password,
-			image,
-			resume,
-			bio,
-			experience
-		} = request.body;
-		const saltRounds = 10;
-		const encrypt = await bcrypt.hash(password, saltRounds);
-		const updatedUser = await userToUpdate.update({
-			firstName: firstName || userToUpdate.firstName,
-			lastName: lastName || userToUpdate.lastName,
-			email: email || userToUpdate.email,
-			password: encrypt || userToUpdate.password,
-			image: image || userToUpdate.image,
-			resume: resume || userToUpdate.resume,
-			bio: bio || userToUpdate.bio,
-			experience: experience || userToUpdate.experience
-		});
+		let encrypt;
+		const { password } = request.body;
+		if (password) {
+			const saltRounds = 10;
+			encrypt = await bcrypt.hash(password, saltRounds);
+		}
+		const updatedUser = await userToUpdate.update(
+			request.body
+		);
 		response.json(updatedUser);
 	} catch (error) {
 		console.error(error);
