@@ -112,13 +112,13 @@ describe('Users API', () => {
 				.send({
 					firstName: 'new',
 					lastName: 'user',
-					email: 'newUser@gmail.com',
+					email: 'newuser@gmail.com',
 					password: 'boom'
 				})
 				.expect(200);
 			loggedInUser = newUser.headers['set-cookie'];
 			const { email } = newUser.body;
-			expect(email).toBe('newUser@gmail.com');
+			expect(email).toBe('newuser@gmail.com');
 		});
 		test('should prevent logged in user to sign up', async () => {
 			newUser = await agent
@@ -127,7 +127,7 @@ describe('Users API', () => {
 				.send({
 					firstName: 'new',
 					lastName: 'user',
-					email: 'newUser@gmail.com',
+					email: 'newuser@gmail.com',
 					password: 'boom'
 				})
 				.expect(301);
@@ -139,7 +139,7 @@ describe('Users API', () => {
 				.send({
 					firstName: 'existing',
 					lastName: 'user',
-					email: 'newUser@gmail.com',
+					email: 'newuser@gmail.com',
 					password: 'boo'
 				})
 				.expect(409);
@@ -169,7 +169,7 @@ describe('Users API', () => {
 				.expect(401);
 			expect(randomUser.text).toBe(loginToProceed);
 		});
-		test('should return users information', async () => {
+		test('should return current user info', async () => {
 			user = await agent
 				.get('/api/users')
 				.set('cookie', loggedInUser)
@@ -177,7 +177,7 @@ describe('Users API', () => {
 			const { firstName, lastName, email } = user.body;
 			expect(firstName).toBe('new');
 			expect(lastName).toBe('user');
-			expect(email).toBe('newUser@gmail.com');
+			expect(email).toBe('newuser@gmail.com');
 		});
 		test('should return all user for admins', async () => {
 			const admin = await agent
@@ -186,15 +186,77 @@ describe('Users API', () => {
 				.expect(200);
 			expect(admin.body.length).toBeGreaterThanOrEqual(10);
 		});
-		test('put route', async () => {
+		test('should update the user logged in', async () => {
 			user = await agent
 				.put('/api/users')
 				.set('cookie', loggedInUser)
-				.expect(500);
-			console.log('userPut: ', user);
+				.send({
+					firstName: 'old',
+					email: 'olduser@gmail.com'
+				})
+				.expect(200);
+			const { firstName, lastName, email } = user.body;
+			expect(firstName).toBe('old');
+			expect(lastName).toBe('user');
+			expect(email).toBe('olduser@gmail.com');
 		});
-		test('delete route', () => {
-			expect(2).toBe(2);
+		test('should update the user as an admin', async () => {
+			await agent
+				.put('/api/users')
+				.set('cookie', adminUser)
+				.send({
+					id: 11,
+					firstName: 'awesome',
+					email: 'awesomeuser@gmail.com'
+				})
+				.expect(200);
+			user = await agent
+				.get('/api/users')
+				.set('cookie', loggedInUser);
+			const { firstName, lastName, email } = user.body;
+			expect(firstName).toBe('awesome');
+			expect(lastName).toBe('user');
+			expect(email).toBe('awesomeuser@gmail.com');
+		});
+		test('should stop unauthorized user', async () => {
+			randomUser = await agent
+				.delete('/api/users')
+				.expect(401);
+			expect(randomUser.text).toBe(loginToProceed);
+		});
+		test('should allow user to delete their profile', async () => {
+			await agent
+				.delete('/api/users')
+				.set('cookie', loggedInUser)
+				.expect(200);
+			user = await agent
+				.get('/api/users')
+				.set('cookie', loggedInUser)
+				.expect(401);
+		});
+		test('should allow admin to delete their profile', async () => {
+			user = await agent
+				.post('/api/users/login')
+				.send({
+					email: 'nmorales@gmail.com',
+					password: 'happy'
+				})
+				.expect(200);
+			await agent
+				.delete('/api/users')
+				.set('cookie', adminUser)
+				.send({ id: user.body.id })
+				.expect(200);
+			const userError = await agent
+				.post('/api/users/login')
+				.send({
+					email: 'nmorales@gmail.com',
+					password: 'happy'
+				})
+				.expect(401);
+			expect(userError.body).toBe(
+				'Incorrect Email or Password!'
+			);
 		});
 	});
 });
