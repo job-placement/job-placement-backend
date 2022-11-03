@@ -48,14 +48,16 @@ const createJob = async (request, response) => {
 			location,
 			UserId: request.user.id
 		});
-		const allSkills = await Skill.findAll();
-		const jobSkills = allSkills
-			.filter(skill => skills.includes(skill.name))
-			.map(skill => ({
-				JobId: newJob.id,
-				SkillId: skill.id
-			}));
-		await JobSkill.bulkCreate(jobSkills);
+		if (skills) {
+			const allSkills = await Skill.findAll();
+			const jobSkills = allSkills
+				.filter(skill => skills.includes(skill.name))
+				.map(skill => ({
+					JobId: newJob.id,
+					SkillId: skill.id
+				}));
+			await JobSkill.bulkCreate(jobSkills);
+		}
 		const result = await Job.findByPk(newJob.id, {
 			include: Skill
 		});
