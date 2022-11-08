@@ -69,39 +69,16 @@ const createJob = async (request, response) => {
 
 const editJob = async (request, response) => {
 	try {
-		const {
-			company,
-			logo,
-			featured,
-			position,
-			role,
-			level,
-			postedAt,
-			contract,
-			location,
-			skills
-		} = request.body;
 		const { id, admin } = request.user;
 		const { jobId } = request.params;
-		const updateJob = await Job.findByPk(jobId, {
-			include: Skill
-		});
+		let updateJob = await Job.findByPk(jobId);
 		if (updateJob.UserId !== id && !admin) {
-			return response.send('Only the creater can modify');
+			return response
+				.status(403)
+				.send('Only the creator or admin can modify');
 		}
-		updateJob.update({
-			company: company || job.company,
-			logo: logo || job.logo,
-			new: request.body.new || job.new,
-			featured: featured || job.featured,
-			position: position || job.position,
-			role: role || job.role,
-			level: level || job.level,
-			postedAt: postedAt || job.postedAt,
-			contract: contract || job.contract,
-			location: location || job.location
-		});
-		if (skills) {
+		await updateJob.update(request.body);
+		if (request.body.skills) {
 			await JobSkill.destroy({ where: { JobId: jobId } });
 			const allSkills = await Skill.findAll();
 			const jobSkills = allSkills
@@ -112,10 +89,10 @@ const editJob = async (request, response) => {
 				}));
 			await JobSkill.bulkCreate(jobSkills);
 		}
-		const updatedJob = await Job.findByPk(jobId, {
+		updateJob = await Job.findByPk(jobId, {
 			include: Skill
 		});
-		response.json(updatedJob);
+		response.json(updateJob);
 	} catch (error) {
 		console.error(error);
 	}
