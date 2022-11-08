@@ -98,7 +98,7 @@ const signup = async (request, response, next) => {
 		request.login(user, error => {
 			if (error) return next(error);
 			console.log('Successfully signed up!');
-			return response.json(user);
+			return response.status(201).json(user);
 		});
 	} catch (error) {
 		console.error(error);
