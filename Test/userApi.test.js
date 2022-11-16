@@ -33,6 +33,7 @@ describe.skip('Users API', () => {
 	});
 
 	describe('/api/users/login', () => {
+		// POST route
 		test('should log in successfully', async () => {
 			user = await agent
 				.post('/api/users/login')
@@ -84,6 +85,7 @@ describe.skip('Users API', () => {
 	});
 
 	describe('/api/users/logout', () => {
+		// POST route
 		test('should successfully logout', async () => {
 			user = await agent
 				.post('/api/users/logout')
@@ -108,6 +110,7 @@ describe.skip('Users API', () => {
 	});
 
 	describe('/api/users/signup', () => {
+		// POST route
 		test('should successfully sign up', async () => {
 			user = await agent
 				.post('/api/users/signup')
@@ -165,6 +168,7 @@ describe.skip('Users API', () => {
 	});
 
 	describe('/api/users', () => {
+		// GET route
 		test('should block unauthorized user', async () => {
 			errorUser = await agent.get('/api/users').expect(401);
 			expect(errorUser.text).toBe(loginToProceed);
@@ -186,6 +190,8 @@ describe.skip('Users API', () => {
 				.expect(200);
 			expect(admin.body.length).toBeGreaterThanOrEqual(10);
 		});
+
+		// PUT route
 		test('should update the user logged in', async () => {
 			user = await agent
 				.put('/api/users')
@@ -219,6 +225,8 @@ describe.skip('Users API', () => {
 			expect(lastName).toBe('user');
 			expect(email).toBe('awesomeuser@gmail.com');
 		});
+
+		// DELETE route
 		test('should block unauthorized user', async () => {
 			errorUser = await agent
 				.delete('/api/users')
@@ -238,10 +246,7 @@ describe.skip('Users API', () => {
 		test('should allow admin to delete their profile', async () => {
 			user = await agent
 				.post('/api/users/login')
-				.send({
-					email: 'nmorales@gmail.com',
-					password: 'happy'
-				})
+				.send(userCredential)
 				.expect(200);
 			await agent
 				.delete('/api/users')
