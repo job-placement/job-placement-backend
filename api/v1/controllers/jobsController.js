@@ -15,6 +15,7 @@ const getJobById = async (request, response) => {
 		const job = await Job.findByPk(jobId, {
 			include: Skill
 		});
+		if (!job) return response.status(404).send('Not Found');
 		response.json(job);
 	} catch (error) {
 		console.error(error);
