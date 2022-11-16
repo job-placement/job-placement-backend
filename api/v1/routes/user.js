@@ -5,6 +5,7 @@ const {
 	checkIfLoggedIn
 } = require('../validations/userValidation');
 
+
 router
 	.route('/')
 	.get(
