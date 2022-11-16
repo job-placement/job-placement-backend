@@ -5,7 +5,7 @@ const app = require('../server/app');
 
 const agent = request(app);
 
-describe.skip('Users API', () => {
+describe('Users API', () => {
 	let loggedInUser, adminUser, errorUser, newUser, user;
 	const loggedInAlready = 'You are already logged in';
 	const loginToProceed = 'Please log in to proceed';

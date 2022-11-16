@@ -5,14 +5,15 @@ const app = require('../server/app');
 
 const agent = request(app);
 
-describe.skip('Skills API', () => {
+describe('Skills API', () => {
+	let skills;
+	beforeAll(async () => {
+		await seed();
+		const allSkills = await agent.get('/api/skills');
+		skills = allSkills.body.map(skill => skill.name);
+	});
+
 	describe('/api/skills', () => {
-		let skills;
-		beforeAll(async () => {
-			await seed();
-			const allSkills = await agent.get('/api/skills');
-			skills = allSkills.body.map(skill => skill.name);
-		});
 		test('should have a lenth of 18 skills', () => {
 			expect(skills).toHaveLength(18);
 		});
