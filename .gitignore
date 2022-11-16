@@ -1,7 +1,20 @@
+# OS metadata
 .DS_Store
+
+# Dependency directory
 node_modules
+
+# Editors
 .vscode
+
+# API keys and secrets
 .env
+
+# Coverage reports from Jest
 coverage
+
+# Local database
 Placement.session.sql
-notes.js
+
+# Developer notes
+NOTES.md
