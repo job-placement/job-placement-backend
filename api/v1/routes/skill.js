@@ -1,10 +1,8 @@
-const router = require("express").Router();
-const { body } = require('express-validator');
+const router = require('express').Router();
 const {
-        getSkills
-      } = require('../controllers/skillsController');
+	getSkills
+} = require('../controllers/skillsController');
 
-router.route('/skills')
-  .get(getSkills);
+router.route('/').get(getSkills);
 
 module.exports = router;

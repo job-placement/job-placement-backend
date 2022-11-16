@@ -1,4 +1,8 @@
-const { Sequelize, DataTypes, Model } = require('sequelize');
+const {
+	Sequelize,
+	DataTypes,
+	Model
+} = require('sequelize');
 
 const pkg = require('../package.json');
 
@@ -21,16 +25,18 @@ const pkg = require('../package.json');
 // } else {
 //     db = new Sequelize(`postgres://postgres:postgres@localhost:5432/${pkg.name}`, { logging: false})}
 
-let dialect;
-process.env.NODE_ENV === 'production' ?
-	dialect = { ssl: { require: true, rejectUnauthorized: false }} : {};
+const dialect =
+	process.env.NODE_ENV === 'production'
+		? { ssl: { require: true, rejectUnauthorized: false } }
+		: {};
 // creates an instance of database called by the apps name
 const db = new Sequelize(
-  process.env.DATABASE_URL || `postgres://postgres:postgres@localhost:5432/${pkg.name}`,
-  {
-    logging: false,
-    dialectOptions: dialect
-  }
+	process.env.DATABASE_URL ||
+		`postgres://postgres:postgres@localhost:5432/${pkg.name}`,
+	{
+		logging: false,
+		dialectOptions: dialect
+	}
 );
 
 // Test if the instance is properly connected
