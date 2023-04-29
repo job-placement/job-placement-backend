@@ -17,7 +17,7 @@ const {
 const createDB = async () => {
 	try {
 		// creaing a client with connection information
-		const client = await new Client({
+		const client = new Client({
 			user: 'postgres',
 			password: 'postgres',
 			database: 'postgres',
@@ -29,12 +29,12 @@ const createDB = async () => {
 		await client.connect();
 
 		// create a database called the name of the project (placement)
-		await client.query(
+		client.query(
 			`CREATE DATABASE ${pkg.name}`,
-			async (error, res) => {
+			async error => {
 				try {
 					if (error) {
-						console.log(error.message);
+						console.error(error.message);
 					} else {
 						console.log(`Database ${pkg.name} created`);
 					}
@@ -44,12 +44,12 @@ const createDB = async () => {
 					// seed function will populate the database
 					await seed();
 				} catch (error) {
-					console.log(error.message);
+					console.error(error.message);
 				}
 			}
 		);
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 };
 
